@@ -1,56 +1,51 @@
-import NextAuth, { CallbacksOptions, NextAuthOptions } from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import LoginApi from './login';
 
 export default NextAuth({
-  // https://next-auth.js.org/configuration/providers/oauth
   providers: [
-    Credentials({
-      name: 'Paycheck Portal',
+    CredentialsProvider({
       async authorize(credentials, req) {
-        try {
-          const res = await LoginApi.login({
-            personal_id: credentials.personal_id,
-            password: credentials.password,
-          });
-          if (res.data.status && res.data) {
-            const user = res.data;
-            return user;
-          }
-          return null;
-        } catch (error) {
-          throw new Error(error?.response?.data?.message || 'REQUEST_ERROR');
+        const res = await LoginApi.login({
+          personal_id: credentials.personal_id,
+          password: credentials.password,
+        });
+
+        if (res.data) {
+          return res.data;
         }
-        // return user;
+
+        return null;
       },
     }),
   ],
-  // callbacks: {
-  //   async jwt(token, user, account, profile, isNewUser) {
-  //     if (user) {
-  //       token.jwt = user.token;
-  //       token.user = user.user;
-  //     }
-  //     return token;
-  //   },
-  //   async redirect({ url, baseUrl }) {
-  //     if (url.startsWith(baseUrl)) return url;
-  //     // Allows relative callback URLs
-  //     if (url.startsWith('/')) return new URL(url, baseUrl).toString();
-  //     return baseUrl;
-  //   },
-  //   async session(session, user) {
-  //     if (user) {
-  //       session.accessToken = user.jwt;
-  //       session.user = user.user;
-  //     }
+  secret: process.env.JWT_SECRET,
+  pages: {
+    signIn: '/login',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user)
+        return {
+          ...token,
+          accessToken: user.accessToken,
+          name: user.full_name,
+          phone: user.phone_number,
+        };
 
-  //     return session;
-  //   },
-  // },
-  // session: {
-  //   jwt: true,
-  //   maxAge: 30 * 24 * 60 * 60, // 30 days
-  //   updateAge: 24 * 60 * 60, // 24 hours
-  // },
+      return token;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+    async session({ session, token }) {
+      return session;
+    },
+  },
+  // Enable debug messages in the console if you are having problems
+  debug: process.env.NODE_ENV === 'development',
+  session: {
+    // Set to jwt in order to CredentialsProvider works properly
+    strategy: 'jwt',
+  },
 });

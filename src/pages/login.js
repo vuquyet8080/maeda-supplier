@@ -1,11 +1,14 @@
+import { delay } from 'helper/utils';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 function Login() {
   const [loading, setLoading] = useState(false);
   const [pid, setPid] = useState('');
   const [password, setPassword] = useState('');
-  console.log('🚀 ===== password', password);
+
+  const router = useRouter();
 
   const handleChange = (e, type) => {
     if (type === 'pid') {
@@ -22,9 +25,14 @@ function Login() {
       const values = {
         personal_id: pid,
         password,
+        callbackUrl: `${window.location.origin}`,
       };
       const result = await signIn('credentials', { redirect: false, ...values });
+      await delay(100).then(() => setLoading(false));
       console.log('🚀 ===== result', result);
+      if (result?.url) {
+        router.push(result?.url);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -50,8 +58,9 @@ function Login() {
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-3 bg-blue-500 hover:bg-blue-400 active:bg-blue-600 text-white rounded-md uppercase"
+          className="w-full px-4 py-3 btn-primary rounded-md uppercase"
           onClick={handleSubmit}
+          disabled={loading}
         >
           login
         </button>
@@ -59,5 +68,10 @@ function Login() {
     </div>
   );
 }
+
+// export async function getServerSideProps(context) {
+//   const csrfToken = await getCsrfToken(context);
+//   return { props: { csrfToken } };
+// }
 
 export default Login;

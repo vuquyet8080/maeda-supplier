@@ -1,6 +1,7 @@
-import 'styles/globals.scss';
-import { SessionProvider } from 'next-auth/react';
 import LayoutWithHeader from 'components/LayoutWithHeader';
+import { SessionProvider } from 'next-auth/react';
+import 'react-toastify/dist/ReactToastify.css';
+import 'styles/globals.scss';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (

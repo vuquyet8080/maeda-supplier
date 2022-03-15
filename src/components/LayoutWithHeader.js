@@ -1,19 +1,33 @@
-import { signIn, useSession } from 'next-auth/react';
-import React, { useEffect, useMemo, useState } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { AUTH_STATUS } from 'constants/auth';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Menu, Transition } from '@headlessui/react';
 
 function LayoutWithHeader({ children }) {
   const { data: session, status } = useSession();
-  console.log('🚀 ===== session, status', session, status);
 
-  const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (status === AUTH_STATUS.AUTHENTICATED) {
-      setIsLogin(true);
+  // useEffect(() => {
+  //   if (status === AUTH_STATUS.AUTHENTICATED) {
+  //     router.push('/');
+  //   } else {
+  //     router.push('/login');
+  //   }
+  // }, [status]);
+
+  const renderNameAbbr = () => {
+    if (session?.user) {
+      const splited = session?.user?.name.split(' ');
+      if (splited.length > 1) {
+        return `${splited[0].charAt(0)}${splited[1].charAt(0)}`;
+      }
+      return `${splited[0].charAt(0)}`;
     }
-  }, [status]);
+    return '';
+  };
 
   const renderLoginBtn = useMemo(() => {
     if (status === AUTH_STATUS.LOADING) {
@@ -24,7 +38,7 @@ function LayoutWithHeader({ children }) {
         <Link href="/login">
           <a
             type="button"
-            className="flex items-center bg-slate-500 hover:bg-slate-400 active:bg-slate-600 px-8 py-3 rounded-md"
+            className="flex items-center bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none px-8 py-3 rounded-md"
           >
             Login
           </a>
@@ -32,18 +46,49 @@ function LayoutWithHeader({ children }) {
       );
     }
     return (
-      <div className="flex items-center justify-between space-x-2">
-        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-500">
-          TM
+      <Menu as="div" className="relative inline-block text-left">
+        <div>
+          <Menu.Button className="inline-flex justify-center w-full px-4 py-2 font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <div className="flex items-center justify-between space-x-2">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-500 uppercase">
+                <p>{renderNameAbbr()}</p>
+              </div>
+              <div>
+                <p>{session?.user?.name}</p>
+              </div>
+            </div>
+          </Menu.Button>
         </div>
-        <p>Hehe boi</p>
-      </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right text-sm bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="px-1 py-1">
+              <Menu.Item>
+                <button
+                  type="button"
+                  className="flex items-center btn-primary-reverse focus:outline-none px-8 py-3 rounded-md capitalize w-full"
+                  onClick={signOut}
+                >
+                  logout
+                </button>
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Transition>
+      </Menu>
     );
   }, [status]);
 
   return (
     <>
-      <div className="px-6 py-4 bg-[#00a6f5] text-white flex items-center justify-between">
+      <div className="px-6 py-4 bg-gradient-to-r to-indigo-500 from-purple-500 text-white flex items-center justify-between">
         <p className="uppercase font-bold">paycheck portal</p>
         {renderLoginBtn}
       </div>
