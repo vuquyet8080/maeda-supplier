@@ -1,22 +1,13 @@
-import { signIn, signOut, useSession } from 'next-auth/react';
-import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
 import { AUTH_STATUS } from 'constants/auth';
+import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Menu, Transition } from '@headlessui/react';
+import React, { Fragment, useMemo } from 'react';
 
 function LayoutWithHeader({ children }) {
   const { data: session, status } = useSession();
-
   const router = useRouter();
-
-  // useEffect(() => {
-  //   if (status === AUTH_STATUS.AUTHENTICATED) {
-  //     router.push('/');
-  //   } else {
-  //     router.push('/login');
-  //   }
-  // }, [status]);
 
   const renderNameAbbr = () => {
     if (session?.user) {
@@ -86,15 +77,38 @@ function LayoutWithHeader({ children }) {
     );
   }, [status]);
 
+  if (typeof window === 'undefined') return null;
+
+  const renderChildren = () => {
+    if (session || router.pathname === '/login') {
+      return children;
+    }
+    return (
+      <div className="h-[calc(100vh-90px)] w-full flex flex-col space-y-4 items-center justify-center">
+        <Link href="/login">
+          <a className="flex items-center btn-primary px-8 py-3 rounded-md">Login</a>
+        </Link>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="px-6 py-4 bg-gradient-to-r to-indigo-500 from-purple-500 text-white flex items-center justify-between">
         <p className="uppercase font-bold">paycheck portal</p>
         {renderLoginBtn}
       </div>
-      {children}
+      {renderChildren()}
     </>
   );
 }
 
 export default LayoutWithHeader;
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      session: await getSession(context),
+    },
+  };
+}

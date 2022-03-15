@@ -29,7 +29,6 @@ function Login() {
       };
       const result = await signIn('credentials', { redirect: false, ...values });
       await delay(100).then(() => setLoading(false));
-      console.log('🚀 ===== result', result);
       if (result?.url) {
         router.push(result?.url);
       }
