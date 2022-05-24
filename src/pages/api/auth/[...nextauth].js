@@ -14,9 +14,10 @@ export default NextAuth({
           if (res.data) {
             return res.data;
           }
-
           return null;
-        } catch (error) {}
+        } catch (error) {
+          throw new Error(error?.response?.data?.message || 'REQUEST_ERROR');
+        }
       },
     }),
   ],

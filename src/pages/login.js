@@ -1,7 +1,9 @@
+import Spin from 'components/Spin';
 import { delay } from 'helper/utils';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -28,14 +30,21 @@ function Login() {
         callbackUrl: `${window.location.origin}`,
       };
       const result = await signIn('credentials', { redirect: false, ...values });
-
       await delay(100).then(() => setLoading(false));
-
+      //
+      if (result?.error === 'Auth failed, email not found') {
+        toast('البريد الإلكتروني غير موجود');
+      } else if (`Password doesn't match`) {
+        toast('كلمة المرور غير متطابقة');
+      } else {
+        toast(result?.error);
+      }
       if (result?.url) {
         router.push(result?.url);
       }
     } catch (error) {}
   };
+
   return (
     <div className="flex items-center justify-center h-screen drop-shadow-lg px-6 ">
       <div className="drop-shadow-sm border-y-zinc-100 border  rounded-lg space-y-8 p-8 bg-white md:w-1/2 xl:w-96  w-full md:px-12 ">
@@ -57,22 +66,20 @@ function Login() {
             onChange={(e) => handleChange(e, 'password')}
           />
         </div>
-        <button
-          type="submit"
-          className="w-full px-4 py-3 btn-primary rounded-md "
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          كلمه السر
-        </button>
+        <div className="flex flex-row justify-center items-center relative">
+          <button
+            type="submit"
+            className="w-full px-4 py-3 btn-primary rounded-md "
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            كلمه السر
+          </button>
+          <div className="absolute right-0  w-6 h-6 mr-4">{loading && <Spin />}</div>
+        </div>
       </div>
     </div>
   );
 }
-
-// export async function getServerSideProps(context) {
-//   const csrfToken = await getCsrfToken(context);
-//   return { props: { csrfToken } };
-// }
 
 export default Login;
