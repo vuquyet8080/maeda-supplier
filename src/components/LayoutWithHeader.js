@@ -21,7 +21,7 @@ function LayoutWithHeader({ children }) {
             type="button"
             className="flex items-center bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none px-8 py-3 rounded-md"
           >
-            Login
+            تسجيل الدخول
           </a>
         </Link>
       );
@@ -57,7 +57,7 @@ function LayoutWithHeader({ children }) {
                   className="flex items-center btn-primary-reverse focus:outline-none px-8 py-3 rounded-md capitalize w-full"
                   onClick={signOut}
                 >
-                  logout
+                  تسجيل خروج
                 </button>
               </Menu.Item>
             </div>
@@ -76,7 +76,7 @@ function LayoutWithHeader({ children }) {
     return (
       <div className="h-[calc(100vh-90px)] w-full flex flex-col space-y-4 items-center justify-center">
         <Link href="/login">
-          <a className="flex items-center btn-primary px-8 py-3 rounded-md ">Login</a>
+          <a className="flex items-center btn-primary px-8 py-3 rounded-md ">تسجيل الدخول</a>
         </Link>
       </div>
     );

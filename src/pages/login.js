@@ -39,17 +39,19 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-screen drop-shadow-lg px-6 ">
       <div className="drop-shadow-sm border-y-zinc-100 border  rounded-lg space-y-8 p-8 bg-white md:w-1/2 xl:w-96  w-full md:px-12 ">
-        <p className="text-center text-3xl font-semibold">Login</p>
+        <p className="text-center text-3xl font-semibold">تسجيل الدخول</p>
         <div className="grid grid-cols-12 gap-x-2 md:gap-y-5 gap-y-3  items-center max-w-3xl w-full ">
           <input
-            placeholder="Enter your email"
+            dir="rtl"
+            placeholder="أدخل بريدك الإلكتروني"
             type="text"
             className="col-span-12 border border-slate-400 rounded-md px-3 py-2  placeholder:text-gray-300 placeholder:text-sm  text-sm font-normal"
             onChange={(e) => handleChange(e, 'email')}
           />
 
           <input
-            placeholder="Password"
+            dir="rtl"
+            placeholder="كلمه السر"
             type="password"
             className="col-span-12 border border-slate-400 rounded-md px-3 py-2 placeholder:text-gray-300 placeholder:text-sm text-sm font-normal"
             onChange={(e) => handleChange(e, 'password')}
@@ -61,7 +63,7 @@ function Login() {
           onClick={handleSubmit}
           disabled={loading}
         >
-          Sign in
+          كلمه السر
         </button>
       </div>
     </div>
