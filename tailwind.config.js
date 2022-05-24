@@ -1,7 +1,11 @@
 module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary-red': '#BE2448',
+      },
+    },
     screens: {
       sm: '640px',
       // => @media (min-width: 640px) { ... }

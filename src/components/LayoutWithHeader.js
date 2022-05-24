@@ -29,8 +29,8 @@ function LayoutWithHeader({ children }) {
     return (
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <Menu.Button className="-flex justify-center w-full px-4 py-2 inline font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            <div className="flex items-center justify-between space-x-2">
+          <Menu.Button className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <div className="flex items-center justify-between ">
               <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-500 uppercase p-2">
                 <UserIcon />
               </div>
@@ -84,7 +84,7 @@ function LayoutWithHeader({ children }) {
 
   return (
     <>
-      <div className="px-6 py-4 bg-gradient-to-r to-indigo-500 from-purple-500 text-white flex items-center justify-between">
+      <div className="px-6 py-4 bg-primary-red text-white flex items-center justify-between">
         <p className="uppercase font-bold">Maeda Supplier</p>
         {renderLoginBtn}
       </div>
