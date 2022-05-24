@@ -8,16 +8,11 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: [
-    'airbnb',
-    'airbnb/hooks',
-    'next',
-    'prettier',
-  ],
+  extends: ['airbnb', 'airbnb/hooks', 'next', 'prettier'],
   settings: {
     'import/resolver': {
       node: {
-        "config": "./next.config.js",
+        config: './next.config.js',
         extensions: ['.js', '.jsx', '.json', '.css'],
         moduleDirectory: ['node_modules', 'src/'],
       },

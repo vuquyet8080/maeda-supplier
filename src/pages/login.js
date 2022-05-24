@@ -1,18 +1,18 @@
 import { delay } from 'helper/utils';
 import { signIn } from 'next-auth/react';
-import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 
 function Login() {
   const [loading, setLoading] = useState(false);
-  const [pid, setPid] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const router = useRouter();
 
   const handleChange = (e, type) => {
-    if (type === 'pid') {
-      setPid(e.target.value);
+    if (type === 'email') {
+      setEmail(e.target.value);
     }
     if (type === 'password') {
       setPassword(e.target.value);
@@ -23,45 +23,45 @@ function Login() {
     try {
       setLoading(true);
       const values = {
-        personal_id: pid,
+        email,
         password,
         callbackUrl: `${window.location.origin}`,
       };
       const result = await signIn('credentials', { redirect: false, ...values });
+
       await delay(100).then(() => setLoading(false));
+
       if (result?.url) {
         router.push(result?.url);
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
-
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="border border-slate-300 rounded-lg space-y-8 p-8">
-        <p className="text-center uppercase text-3xl font-semibold">Paycheck portal</p>
-        <div className="grid grid-cols-12 gap-x-2 gap-y-3 items-center max-w-3xl w-full">
-          <p className="col-span-4">ID:</p>
+    <div className="flex items-center justify-center h-screen drop-shadow-lg px-6 ">
+      <div className="drop-shadow-sm border-y-zinc-100 border  rounded-lg space-y-8 p-8 bg-white md:w-1/2 xl:w-96  w-full md:px-12 ">
+        <p className="text-center text-3xl font-semibold">Login</p>
+        <div className="grid grid-cols-12 gap-x-2 md:gap-y-5 gap-y-3  items-center max-w-3xl w-full ">
           <input
+            placeholder="Enter your email"
             type="text"
-            className="col-span-8 border border-slate-400 rounded-md px-3 py-2"
-            onChange={(e) => handleChange(e, 'pid')}
+            className="col-span-12 border border-slate-400 rounded-md px-3 py-2  placeholder:text-gray-300 placeholder:text-sm  text-sm font-normal"
+            onChange={(e) => handleChange(e, 'email')}
           />
-          <p className="col-span-4">Password:</p>
+
           <input
+            placeholder="Password"
             type="password"
-            className="col-span-8 border border-slate-400 rounded-md px-3 py-2"
+            className="col-span-12 border border-slate-400 rounded-md px-3 py-2 placeholder:text-gray-300 placeholder:text-sm text-sm font-normal"
             onChange={(e) => handleChange(e, 'password')}
           />
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-3 btn-primary rounded-md uppercase"
+          className="w-full px-4 py-3 btn-primary rounded-md "
           onClick={handleSubmit}
           disabled={loading}
         >
-          login
+          Sign in
         </button>
       </div>
     </div>

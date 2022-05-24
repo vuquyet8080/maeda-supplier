@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { LOGIN } from 'constants/request';
 
-const login = (params) => axios.post(LOGIN, params);
+const login = (params) => {
+  console.log(':> login api', params);
+  return axios.post(LOGIN, params);
+};
 
 // const guest = () => axios.post(AUTH_USER_GUEST);
-
 const LoginApi = {
   login,
   // guest

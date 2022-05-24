@@ -6,16 +6,17 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials, req) {
-        const res = await LoginApi.login({
-          personal_id: credentials.personal_id,
-          password: credentials.password,
-        });
+        try {
+          const res = await LoginApi.login({
+            email: credentials.email,
+            password: credentials.password,
+          });
+          if (res.data) {
+            return res.data;
+          }
 
-        if (res.data) {
-          return res.data;
-        }
-
-        return null;
+          return null;
+        } catch (error) {}
       },
     }),
   ],
@@ -24,16 +25,11 @@ export default NextAuth({
     signIn: '/login',
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ user }) {
       if (user)
         return {
-          ...token,
-          accessToken: user.accessToken,
-          name: user.full_name,
-          phone: user.phone_number,
+          user,
         };
-
-      return token;
     },
     async redirect({ url, baseUrl }) {
       return baseUrl;

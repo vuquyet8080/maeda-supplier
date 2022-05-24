@@ -1,6 +1,7 @@
-// http://159.223.75.67/api/v1/
+/* eslint-disable prefer-destructuring */
 
-const BASE_URL = 'http://159.223.75.67/';
-const API_SUFFIX = 'api/v1/';
+const URL = process.env.BASE_URL;
+const API_SUFFIX = process.env.API_SUFFIX;
 
-export const LOGIN = `${BASE_URL}${API_SUFFIX}auth/login`;
+// export const LOGIN = `${URL}${API_SUFFIX}auth/login`;
+export const LOGIN = `https://dev.maedaexpress.com/api/admin/api/v1/suppliers/login`;
