@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import { useEffect } from 'react';
+import Sidebar from 'components/SideBar/Sidebar';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   // useEffect(() => {
@@ -15,6 +16,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
     <SessionProvider session={session} refetchInterval={5 * 60}>
       <LayoutWithHeader>
         <Component {...pageProps} />
+        <Sidebar />
+
         <ToastContainer />
       </LayoutWithHeader>
     </SessionProvider>

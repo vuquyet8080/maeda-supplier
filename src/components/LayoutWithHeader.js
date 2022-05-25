@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment, useMemo } from 'react';
 import { UserIcon } from '@heroicons/react/outline';
+import Sidebar from './SideBar/Sidebar';
 
 function LayoutWithHeader({ children }) {
   const { data: session, status } = useSession();
@@ -27,8 +28,8 @@ function LayoutWithHeader({ children }) {
       );
     }
     return (
-      <Menu as="div" className="relative inline-block text-left">
-        <div>
+      <Menu as="div" className="relative inline-block text-left h-10">
+        {/* <div>
           <Menu.Button className="focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             <div className="flex items-center justify-between ">
               <div className="w-10 h-10 rounded-full flex items-center justify-center bg-slate-500 uppercase p-2">
@@ -39,7 +40,8 @@ function LayoutWithHeader({ children }) {
               </div>
             </div>
           </Menu.Button>
-        </div>
+        </div> */}
+
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
