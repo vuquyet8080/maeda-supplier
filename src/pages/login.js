@@ -52,7 +52,7 @@ function Login() {
         callbackUrl: `${window.location.origin}`,
       };
       const result = await signIn('credentials', { redirect: false, ...values });
-      await delay(100).then(() => setLoading(false));
+
       //
       if (result?.error === 'Auth failed, email not found') {
         toastMessages('error', 'البريد الإلكتروني غير موجود');
@@ -62,7 +62,11 @@ function Login() {
       if (result?.url) {
         router.push(result?.url);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      await delay(100).then(() => setLoading(false));
+    }
   };
 
   return (

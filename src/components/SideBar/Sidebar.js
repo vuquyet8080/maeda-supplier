@@ -1,22 +1,24 @@
-import { useState } from 'react';
 import { XIcon } from '@heroicons/react/solid';
+import { DashboardIcon, DriverIcon, SignOutIcon } from 'constants/icon';
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { Dashboard, Driver } from 'constants/icon';
+import { useState } from 'react';
 
 function Sidebar() {
   const [showSidebar, setShowSidebar] = useState(false);
+
   const menuItems = [
     {
       id: 1,
       name: 'Driver',
       url: '/driver',
-      icon: <Driver />,
+      icon: <DriverIcon />,
     },
     {
       id: 2,
       name: 'Dashboard',
-      url: '#',
-      icon: <Dashboard />,
+      url: '/#',
+      icon: <DashboardIcon />,
     },
   ];
   return (
@@ -35,7 +37,7 @@ function Sidebar() {
         <svg
           onClick={() => setShowSidebar(!showSidebar)}
           className="fixed z-30 flex items-center cursor-pointer right-10 top-5"
-          fill="#2563EB"
+          fill="white"
           viewBox="0 0 100 80"
           width="40"
           height="40"
@@ -53,10 +55,7 @@ function Sidebar() {
       >
         {menuItems.map((itemNav) => (
           <Link href={itemNav.url} key={itemNav.id}>
-            <a className="md:mb-2  mb-1 flex items-center space-x-1 rounded-md px-2 md:py-3 py-2 hover:bg-gray-100 hover:text-blue-600">
-              <span className="text-2xl">
-                <i className="bx bx-cart" />
-              </span>
+            <a className="pl-4 md:mb-2  mb-1 flex items-center space-x-1 rounded-md px-2 md:py-3 py-2 hover:bg-gray-100 hover:text-blue-600">
               <div className="w-8 h-8 flex justify-center items-center ">
                 <span className="pr-2">{itemNav.icon}</span>
               </div>
@@ -64,6 +63,16 @@ function Sidebar() {
             </a>
           </Link>
         ))}
+        <button type="button" className="w-full" onClick={signOut}>
+          <div className=" pl-4 md:mb-2  mb-1 flex items-center space-x-1 rounded-md px-2 md:py-3 py-2 hover:bg-gray-100 hover:text-blue-600">
+            <div className="w-8 h-8 flex justify-center items-center ">
+              <span className="pr-2">
+                <SignOutIcon />
+              </span>
+            </div>
+            <span className="text-xs md:text-sm">Sign out</span>
+          </div>
+        </button>
       </div>
     </>
   );
