@@ -21,13 +21,20 @@ function Sidebar() {
       icon: <DashboardIcon />,
     },
   ];
+
+  const hiddenNavBar = () => {
+    setShowSidebar(false);
+  };
+  const showNavBar = () => {
+    setShowSidebar(true);
+  };
   return (
     <>
       {showSidebar ? (
         <button
           type="button"
           className="flex text-4xl text-white items-center cursor-pointer fixed right-10 top-5 z-50"
-          onClick={() => setShowSidebar(!showSidebar)}
+          onClick={hiddenNavBar}
         >
           <div className="w-10 h-10 ">
             <XIcon className="text-primary-red" />
@@ -35,7 +42,7 @@ function Sidebar() {
         </button>
       ) : (
         <svg
-          onClick={() => setShowSidebar(!showSidebar)}
+          onClick={showNavBar}
           className="fixed z-30 flex items-center cursor-pointer right-10 top-5"
           fill="white"
           viewBox="0 0 100 80"
@@ -54,14 +61,16 @@ function Sidebar() {
         }`}
       >
         {menuItems.map((itemNav) => (
-          <Link href={itemNav.url} key={itemNav.id}>
-            <a className="pl-4 md:mb-2  mb-1 flex items-center space-x-1 rounded-md px-2 md:py-3 py-2 hover:bg-gray-100 hover:text-blue-600">
-              <div className="w-8 h-8 flex justify-center items-center ">
-                <span className="pr-2">{itemNav.icon}</span>
-              </div>
-              <span className="text-xs md:text-sm">{itemNav.name}</span>
-            </a>
-          </Link>
+          <button type="button" key={itemNav.id} onClick={hiddenNavBar} className="block w-full">
+            <Link href={itemNav.url} key={itemNav.id}>
+              <a className="pl-4 md:mb-2  mb-1 flex items-center space-x-1 rounded-md px-2 md:py-3 py-2 hover:bg-gray-100 hover:text-blue-600">
+                <div className="w-8 h-8 flex justify-center items-center ">
+                  <span className="pr-2">{itemNav.icon}</span>
+                </div>
+                <span className="text-xs md:text-sm">{itemNav.name}</span>
+              </a>
+            </Link>
+          </button>
         ))}
         <button type="button" className="w-full" onClick={signOut}>
           <div className=" pl-4 md:mb-2  mb-1 flex items-center space-x-1 rounded-md px-2 md:py-3 py-2 hover:bg-gray-100 hover:text-blue-600">
