@@ -52,8 +52,8 @@ function Login() {
         callbackUrl: `${window.location.origin}`,
       };
       const result = await signIn('credentials', { redirect: false, ...values });
-
       //
+      await delay(100).then(() => setLoading(false));
       if (result?.error === 'Auth failed, email not found') {
         toastMessages('error', 'البريد الإلكتروني غير موجود');
       } else if (result?.error === `Password doesn't match`) {
@@ -64,8 +64,6 @@ function Login() {
       }
     } catch (error) {
       console.log('error', error);
-    } finally {
-      await delay(100).then(() => setLoading(false));
     }
   };
 

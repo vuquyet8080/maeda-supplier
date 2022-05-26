@@ -36,7 +36,7 @@ function Sidebar() {
           className="flex text-4xl text-white items-center cursor-pointer fixed right-10 top-5 z-50"
           onClick={hiddenNavBar}
         >
-          <div className="w-10 h-10 ">
+          <div className="w-8 h-8 ">
             <XIcon className="text-primary-red" />
           </div>
         </button>
@@ -46,8 +46,8 @@ function Sidebar() {
           className="fixed z-30 flex items-center cursor-pointer right-10 top-5"
           fill="white"
           viewBox="0 0 100 80"
-          width="40"
-          height="40"
+          width="26"
+          height="26"
         >
           <rect width="100" height="10" />
           <rect y="30" width="100" height="10" />

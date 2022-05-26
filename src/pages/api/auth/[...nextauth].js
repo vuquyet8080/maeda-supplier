@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import LoginApi from './login';
@@ -26,23 +27,25 @@ export default NextAuth({
     signIn: '/login',
   },
   callbacks: {
-    async jwt({ user }) {
-      if (user)
+    async jwt({ token, user }) {
+      if (user) {
         return {
-          user,
+          ...token,
+          accessToken: user.token,
         };
-    },
-    async redirect({ url, baseUrl }) {
-      return baseUrl;
+      }
+      return token;
     },
     async session({ session, token }) {
+      session.accessToken = token?.accessToken;
       return session;
     },
+    async redirect({ baseUrl }) {
+      return baseUrl;
+    },
   },
-  // Enable debug messages in the console if you are having problems
   debug: process.env.NODE_ENV === 'development',
   session: {
-    // Set to jwt in order to CredentialsProvider works properly
     strategy: 'jwt',
   },
 });
