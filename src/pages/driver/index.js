@@ -1,14 +1,42 @@
 /* eslint-disable no-underscore-dangle */
 // eslint-disable-next-line no-underscore-dangle
 import { getAmountEarn, getDrivers } from 'actions/driver';
+import SelectBox from 'components/SelectBox';
 import TableData from 'components/TableData';
 import { columnsTableDriver } from 'constants/columsTable/columsDriver';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
+import CustomInput from 'components/CustomInput';
+
+const status = ['active', 'deactivate', 'active1', 'deactivate2', 'active3', 'deactivate4'];
 
 export default function Driver() {
+  const [searchByName, setSearchByName] = useState('');
+  const [searchById, setSearchById] = useState('');
+  // filter
+  const [selectedPersons, setSelectedPersons] = useState([]);
+
+  const isSelected = (value) => !!selectedPersons.find((el) => el === value);
+
+  const removeItem = (person) => {
+    const removedSelection = selectedPersons.filter((selected) => selected !== person);
+    setSelectedPersons(removedSelection);
+  };
+
+  const handleSelection = (person) => {
+    const selectedResult = selectedPersons.filter((selected) => selected === person);
+    if (selectedResult.length) {
+      removeItem(person);
+    } else {
+      setSelectedPersons((currents) => [...currents, person]);
+    }
+  };
+  // filter
+
+  // data table driver
   const [dataDriver, setData] = useState([]);
   const flagGetDataEarn = useRef(false);
+
   const onGetDriver = async () => {
     const response = await getDrivers({ offset: 1, limit: 10 });
     flagGetDataEarn.current = false;
@@ -18,7 +46,7 @@ export default function Driver() {
 
   useEffect(() => {
     onGetDriver();
-  }, []);
+  }, [searchByName, searchById]);
 
   useEffect(() => {
     const onFetchDataEarn = async () => {
@@ -46,10 +74,39 @@ export default function Driver() {
     };
     onFetchDataEarn();
   }, [dataDriver]);
+  // data table driver
+
+  // filter
+
+  const handleChange = (e, type) => {
+    if (type === 'name') {
+      setSearchByName(e.target.value);
+    } else {
+      setSearchById(e.target.value);
+    }
+  };
+  // filter
+
   return (
     <div>
-      <div className="border-2 py-6 flex flex-row-reverse px-10"></div>
-      <div className="mt-20">
+      <div className="py-6 flex flex-row-reverse px-10">
+        <div className="w-full max-w-xs">
+          <SelectBox
+            valueSelect={selectedPersons}
+            onRemove={removeItem}
+            handleSelection={handleSelection}
+            optionData={status}
+            isSelected={isSelected}
+          />
+        </div>
+        <div className="w-full max-w-xs  h-10 mr-6">
+          <CustomInput onChange={handleChange} type="name" placeholder="Name driver" />
+        </div>
+        <div className="w-full max-w-xs h-10 mr-6">
+          <CustomInput onChange={handleChange} type="id" placeholder="Id driver" />
+        </div>
+      </div>
+      <div className="mt-4">
         <TableData columns={columnsTableDriver} data={dataDriver} />
       </div>
     </div>
