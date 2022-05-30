@@ -2,43 +2,9 @@
 // eslint-disable-next-line no-underscore-dangle
 import { getAmountEarn, getDrivers } from 'actions/driver';
 import TableData from 'components/TableData';
-import React, { useEffect, useState, useRef } from 'react';
+import { columnsTableDriver } from 'constants/columsTable/columsDriver';
 import { cloneDeep, isEmpty } from 'lodash';
-
-const columnsTableDriver = [
-  {
-    name: 'Name',
-    selector: (row) => row.name,
-  },
-  {
-    name: 'ID',
-    selector: (row) => row.id_number,
-  },
-  {
-    name: 'Status',
-    selector: (row) => row.title,
-  },
-  {
-    name: 'Acceptance Rate',
-    selector: (row) => row.year,
-  },
-  {
-    name: 'Trips',
-    selector: (row) => row.title,
-  },
-  {
-    name: 'Earnings',
-    selector: (row) => (row?.earnAmount ? row?.earnAmount : 0),
-  },
-  {
-    name: 'Main balance',
-    selector: (row) => (row.balances.length > 0 ? row.balances[0].new_balance.toFixed(3) : '0.000'),
-  },
-  {
-    name: 'Gift point',
-    selector: (row) => row.year,
-  },
-];
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function Driver() {
   const [dataDriver, setData] = useState([]);
@@ -82,7 +48,10 @@ export default function Driver() {
   }, [dataDriver]);
   return (
     <div>
-      <TableData columns={columnsTableDriver} data={dataDriver} />
+      <div className="border-2 py-6 flex flex-row-reverse px-10"></div>
+      <div className="mt-20">
+        <TableData columns={columnsTableDriver} data={dataDriver} />
+      </div>
     </div>
   );
 }
