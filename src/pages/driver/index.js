@@ -41,7 +41,13 @@ export default function Driver() {
   const flagGetDataEarn = useRef(false);
 
   const onGetDriver = async () => {
-    const response = await getDrivers({ offset: 1, limit: 10, status: statusFilter });
+    const response = await getDrivers({
+      offset: 1,
+      limit: 10,
+      status: statusFilter,
+      idNumber: searchById,
+      name: searchByName,
+    });
     flagGetDataEarn.current = false;
     setData(response?.data?.data?.results);
   };

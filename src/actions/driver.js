@@ -1,7 +1,7 @@
 import { AMOUNT_EARN, DRIVER } from 'constants/request';
 import fetchApi from 'helper/fetchApi';
 
-export const getDrivers = ({ offset, limit, status }) =>
+export const getDrivers = ({ offset, limit, status, idNumber, name }) =>
   fetchApi({
     url: DRIVER,
     options: {
@@ -12,6 +12,8 @@ export const getDrivers = ({ offset, limit, status }) =>
       limit,
       filters: {
         status,
+        id_number: idNumber,
+        name,
       },
     },
   });
