@@ -1,13 +1,20 @@
+import { Menu, Transition } from '@headlessui/react';
+import { UserIcon } from '@heroicons/react/solid';
 import { AUTH_STATUS } from 'constants/auth';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useMemo } from 'react';
-import Sidebar from './SideBar/Sidebar';
+import React, { Fragment, useMemo, useState } from 'react';
+import Navbar from './Navbar';
 
 function LayoutWithHeader({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [collapse, setCollapse] = useState(false);
+
+  const handleCollapse = () => {
+    setCollapse(!collapse);
+  };
 
   const renderLoginBtn = useMemo(() => {
     if (status === AUTH_STATUS.LOADING) {
@@ -18,30 +25,61 @@ function LayoutWithHeader({ children }) {
         <Link href="/login">
           <a
             type="button"
-            className=" text-white flex items-center bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none px-8 py-3 rounded-md"
+            className="flex items-center bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none px-8 py-3 rounded-md text-white"
           >
             تسجيل الدخول
           </a>
         </Link>
       );
     }
-  }, [status]);
-
-  const renderSidebar = useMemo(() => {
-    if (status !== AUTH_STATUS.LOADING && status !== AUTH_STATUS.UNAUTHENTICATED)
-      return (
-        <div as="div" className="relative inline-block text-left h-10">
-          <Sidebar />
+    return (
+      <Menu as="div" className="relative inline-block text-left">
+        <div>
+          <Menu.Button className="inline-flex justify-center w-full p-2 font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <div className="flex items-center justify-between  text-sm">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-slate-500 uppercase">
+                <div className="w-6 h-6 ">
+                  <UserIcon className="text-white" />
+                </div>
+              </div>
+              <div>
+                <p>{session?.user?.name}</p>
+              </div>
+            </div>
+          </Menu.Button>
         </div>
-      );
-    return null;
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="absolute z-10 right-0 w-56 mt-2 origin-top-right text-sm bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="px-1 py-1">
+              <Menu.Item>
+                <button
+                  type="button"
+                  className="flex items-center justify-end btn-primary-reverse focus:outline-none px-4 py-3 rounded-md capitalize w-full"
+                  onClick={signOut}
+                >
+                  logout
+                </button>
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+    );
   }, [status]);
 
   if (typeof window === 'undefined') return null;
 
   const renderChildren = () => {
     if (session || router.pathname === '/login') {
-      return children;
+      return <div className={`w-full ${collapse ? 'pr-[58px]' : 'lg:pr-[250px]'}`}>{children}</div>;
     }
     return (
       <div className="h-[calc(100vh-90px)] w-full flex  space-y-4 items-center justify-center ">
@@ -54,12 +92,13 @@ function LayoutWithHeader({ children }) {
 
   return (
     <>
-      <div className="px-6 py-4 bg-primary-red  flex items-center justify-between flex-row-reverse ">
-        <p className="uppercase font-bold text-white ">Maeda Supplier</p>
+      <div className="px-6 h-16 bg-primary-red flex items-center justify-between fixed w-full top-0 left-0 right-0 z-20">
         {renderLoginBtn}
-        {renderSidebar}
       </div>
-      {renderChildren()}
+      <div className="flex justify-between pt-[64px]">
+        {renderChildren()}
+        <Navbar isLogin={!!session?.user} collapse={collapse} handleCollapse={handleCollapse} />
+      </div>
     </>
   );
 }

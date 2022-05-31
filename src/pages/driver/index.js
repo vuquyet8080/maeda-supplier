@@ -109,7 +109,7 @@ export default function Driver() {
   return (
     <div>
       <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4">
-        <div className="w-full max-w-xs h-11">
+        <div className="w-full max-w-xs">
           <SelectBox
             valueSelect={selectedPersons}
             onRemove={removeItem}

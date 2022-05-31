@@ -2,7 +2,7 @@ export const customStyleTable = {
   headCells: {
     style: {
       fontSize: 14,
-      backgroundColor: '#F5F3F5',
+      backgroundColor: '#e6ebe0',
     },
   },
   cells: {
