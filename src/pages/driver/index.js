@@ -13,6 +13,8 @@ const status = ['active', 'deactivate'];
 export default function Driver() {
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
   const statusFilter = useMemo(
@@ -41,15 +43,23 @@ export default function Driver() {
   const flagGetDataEarn = useRef(false);
 
   const onGetDriver = async () => {
-    const response = await getDrivers({
-      offset: 1,
-      limit: 10,
-      status: statusFilter,
-      idNumber: searchById,
-      name: searchByName,
-    });
-    flagGetDataEarn.current = false;
-    setData(response?.data?.data?.results);
+    try {
+      if (isLoading) return;
+      setIsLoading(true);
+      const response = await getDrivers({
+        offset: 1,
+        limit: 10,
+        status: statusFilter,
+        idNumber: searchById,
+        name: searchByName,
+      });
+      flagGetDataEarn.current = false;
+      setData(response?.data?.data?.results);
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const onGetEarnAmount = async (id) => getAmountEarn({ id });
 
@@ -98,8 +108,8 @@ export default function Driver() {
 
   return (
     <div>
-      <div className="py-6 md:flex flex-row-reverse px-10 grid gap-y-4 md:gap-y-0">
-        <div className="w-full max-w-xs">
+      <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4">
+        <div className="w-full max-w-xs h-11">
           <SelectBox
             valueSelect={selectedPersons}
             onRemove={removeItem}
@@ -108,15 +118,15 @@ export default function Driver() {
             isSelected={isSelected}
           />
         </div>
-        <div className="w-full max-w-xs  h-10 mr-6">
+        <div className="w-full max-w-xs  h-11">
           <CustomInput onChange={handleChange} type="name" placeholder="Name driver" />
         </div>
-        <div className="w-full max-w-xs h-10 mr-6">
+        <div className="w-full max-w-xs h-11">
           <CustomInput onChange={handleChange} type="id" placeholder="Id driver" />
         </div>
       </div>
       <div className="mt-4">
-        <TableData columns={columnsTableDriver} data={dataDriver} />
+        <TableData columns={columnsTableDriver} data={dataDriver} isLoading={isLoading} />
       </div>
     </div>
   );

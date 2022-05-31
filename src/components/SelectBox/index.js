@@ -4,11 +4,11 @@ import React from 'react';
 
 export default function index({ valueSelect, handleSelection, onRemove, optionData, isSelected }) {
   return (
-    <Listbox as="div" className="gap-1" value={valueSelect} onChange={handleSelection}>
+    <Listbox as="div" className="gap-1 h-full" value={valueSelect} onChange={handleSelection}>
       {({ open }) => (
-        <div className="relative">
-          <span className="inline-block w-full rounded-md shadow-sm ">
-            <Listbox.Button className=" cursor-default relative w-full rounded-md border border-gray-300 bg-white pl-3 pr-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-400 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+        <div className="relative h-full">
+          <span className="inline-block w-full rounded-md shadow-sm h-full ">
+            <Listbox.Button className=" cursor-default relative w-full h-full rounded-md border border-gray-300 bg-white pl-3 pr-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-400 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
               {!valueSelect.length && (
                 <div className="gap-2 flex flex-wrap">
                   <span className="text-gray-300 h-6 py-1 text-sm">حدد الحالة</span>

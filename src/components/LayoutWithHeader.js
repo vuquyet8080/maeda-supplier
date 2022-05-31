@@ -25,11 +25,16 @@ function LayoutWithHeader({ children }) {
         </Link>
       );
     }
-    return (
-      <div as="div" className="relative inline-block text-left h-10">
-        <Sidebar />
-      </div>
-    );
+  }, [status]);
+
+  const renderSidebar = useMemo(() => {
+    if (status !== AUTH_STATUS.LOADING && status !== AUTH_STATUS.UNAUTHENTICATED)
+      return (
+        <div as="div" className="relative inline-block text-left h-10">
+          <Sidebar />
+        </div>
+      );
+    return null;
   }, [status]);
 
   if (typeof window === 'undefined') return null;
@@ -39,7 +44,7 @@ function LayoutWithHeader({ children }) {
       return children;
     }
     return (
-      <div className="h-[calc(100vh-90px)] w-full flex flex-col space-y-4 items-center justify-center">
+      <div className="h-[calc(100vh-90px)] w-full flex  space-y-4 items-center justify-center ">
         <Link href="/login">
           <a className="flex items-center btn-primary px-8 py-3 rounded-md ">تسجيل الدخول</a>
         </Link>
@@ -49,9 +54,10 @@ function LayoutWithHeader({ children }) {
 
   return (
     <>
-      <div className="px-6 py-4 bg-primary-red  flex items-center justify-between">
+      <div className="px-6 py-4 bg-primary-red  flex items-center justify-between flex-row-reverse ">
         <p className="uppercase font-bold text-white ">Maeda Supplier</p>
         {renderLoginBtn}
+        {renderSidebar}
       </div>
       {renderChildren()}
     </>
