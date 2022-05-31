@@ -5,17 +5,20 @@ import SelectBox from 'components/SelectBox';
 import TableData from 'components/TableData';
 import { columnsTableDriver } from 'constants/columsTable/columsDriver';
 import { cloneDeep, isEmpty } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import CustomInput from 'components/CustomInput';
 
-const status = ['active', 'deactivate', 'active1', 'deactivate2', 'active3', 'deactivate4'];
+const status = ['active', 'deactivate'];
 
 export default function Driver() {
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
-
+  const statusFilter = useMemo(
+    () => selectedPersons.map((itemFilter) => ({ value: itemFilter })),
+    [selectedPersons]
+  );
   const isSelected = (value) => !!selectedPersons.find((el) => el === value);
 
   const removeItem = (person) => {
@@ -38,7 +41,7 @@ export default function Driver() {
   const flagGetDataEarn = useRef(false);
 
   const onGetDriver = async () => {
-    const response = await getDrivers({ offset: 1, limit: 10 });
+    const response = await getDrivers({ offset: 1, limit: 10, status: statusFilter });
     flagGetDataEarn.current = false;
     setData(response?.data?.data?.results);
   };
@@ -46,7 +49,7 @@ export default function Driver() {
 
   useEffect(() => {
     onGetDriver();
-  }, [searchByName, searchById]);
+  }, [searchByName, searchById, statusFilter]);
 
   useEffect(() => {
     const onFetchDataEarn = async () => {
@@ -89,7 +92,7 @@ export default function Driver() {
 
   return (
     <div>
-      <div className="py-6 flex flex-row-reverse px-10">
+      <div className="py-6 md:flex flex-row-reverse px-10 grid gap-y-4 md:gap-y-0">
         <div className="w-full max-w-xs">
           <SelectBox
             valueSelect={selectedPersons}
