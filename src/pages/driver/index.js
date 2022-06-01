@@ -107,6 +107,10 @@ export default function Driver() {
   };
   // filter
 
+  // action ExpandableRowsComponent
+
+  // action ExpandableRowsComponent
+
   return (
     <div>
       <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4">
@@ -132,7 +136,11 @@ export default function Driver() {
           data={dataDriver}
           isLoading={isLoading}
           expandableRows
-          expandableRowsComponent={ExpandableRowsComponent}
+          // expandableRowsComponent={() => (
+          //   <ExpandableRowsComponent onEdit={onEdit} data={(row) => row} />
+          // )}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
           selectableRows
         />
       </div>

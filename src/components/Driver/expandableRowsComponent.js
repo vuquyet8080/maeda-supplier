@@ -1,9 +1,16 @@
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { memo } from 'react';
 
-export default function ExpandableRowsComponent() {
+function ExpandableRowsComponent({ data }) {
+  const router = useRouter();
+  const onEdit = () => {
+    router.push('/driver/profile');
+  };
+
   return (
     <div className="bg-linen h-20 flex items-center gap-x-5 px-5 ltr:flex-row-reverse">
       <button
+        onClick={onEdit}
         type="button"
         className="bg-link-water h-10 rounded-md hover:cursor-pointer hover:bg-opacity-80 flex items-center"
       >
@@ -24,3 +31,5 @@ export default function ExpandableRowsComponent() {
     </div>
   );
 }
+
+export default memo(ExpandableRowsComponent);
