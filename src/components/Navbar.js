@@ -37,7 +37,7 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
     <div
       className={`bg-gray-100 w-full ${
         collapse ? 'max-w-[56px]' : 'max-w-[250px]'
-      } h-[calc(100vh-72px)] items-end fixed right-0 transition-all duration-300 z-10`}
+      } h-[calc(100vh-72px)] items-end fixed rtl:right-0 ltr:left-0 transition-all duration-300 z-10`}
     >
       <div className="w-full h-full flex flex-col justify-between divide-y">
         <div className="w-full p-1 gap-1 flex flex-col">
@@ -45,16 +45,18 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
             <Link href={menu.url} key={menu.id}>
               <a
                 className={`${
-                  router.pathname.includes(menu.url) ? 'bg-primary-red/70 text-white font-bold' : ''
-                } flex items-center justify-end   py-2 rounded-md w-full hover:bg-primary-red/40 relative group ${
-                  collapse ? 'flex justify-center items-center' : 'space-x-2'
+                  router.pathname.includes(menu.url) ? 'bg-red-400 text-white font-bold' : ''
+                } ltr:flex-row-reverse flex items-center justify-end py-2 rounded-md w-full hover:bg-red-400 relative group hover:text-white ${
+                  collapse && showMenuText ? 'flex justify-center items-center' : 'space-x-2'
                 }`}
               >
                 <span className={`text-sm ${showMenuText ? 'block px-2' : 'hidden'}`}>
                   {menu.name}
                 </span>
+
                 <div className="space-x-0 m-0 p-0">{menu.icon}</div>
-                {collapse && <NavbarTooltip title={menu.name} />}
+
+                {/* {collapse && <NavbarTooltip title={menu.name} />} */}
               </a>
             </Link>
           ))}
@@ -64,7 +66,13 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
           type="button"
           onClick={handleCollapse}
         >
-          {!showMenuText ? <IconExpandNav /> : 'Collapse'}
+          {!showMenuText ? (
+            <div className="ltr:rotate-180">
+              <IconExpandNav />
+            </div>
+          ) : (
+            'Collapse'
+          )}
         </button>
       </div>
     </div>

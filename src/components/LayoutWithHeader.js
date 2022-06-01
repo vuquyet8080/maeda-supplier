@@ -57,15 +57,15 @@ function LayoutWithHeader({ children }) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute z-10 right-0 w-56 mt-2 origin-top-right text-sm bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute z-10 rtl:right-0 w-56 mt-2 origin-top-right text-sm bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-1">
               <Menu.Item>
                 <button
                   type="button"
-                  className="flex items-center justify-end btn-primary-reverse focus:outline-none px-4 py-3 rounded-md capitalize w-full"
+                  className="flex items-center rtl:justify-end btn-primary-reverse focus:outline-none px-4 py-3 rounded-md capitalize w-full"
                   onClick={signOut}
                 >
-                  logout
+                  تسجيل خروج
                 </button>
               </Menu.Item>
             </div>
@@ -79,7 +79,20 @@ function LayoutWithHeader({ children }) {
 
   const renderChildren = () => {
     if (session || router.pathname === '/login') {
-      return <div className={`w-full ${collapse ? 'pr-[58px]' : 'lg:pr-[250px]'}`}>{children}</div>;
+      return (
+        <div
+          className={`w-full  transition duration-350 ease-linear ${
+            // collapse ? 'rtl:lg:pr-[58px] ltr:lg:pl-[58px]' : 'rtl:lg:pr-[250px] ltr:lg:pl-[250px]'
+            collapse
+              ? 'rtl:lg:-translate-x-[58px] ltr:lg:translate-x-[58px] lg:w-[calc(100vw-58px)] '
+              : 'rtl:lg:-translate-x-[250px] ltr:lg:translate-x-[250px] lg:w-[calc(100vw-250px)] '
+          } ${
+            collapse ? 'rtl:pr-[58px] ltr:pl-[58px] rtl:lg:pr-0 ltr:lg:pl-0' : 'rtl:pr-0 ltr:pl-0'
+          }`}
+        >
+          {children}
+        </div>
+      );
     }
     return (
       <div className="h-[calc(100vh-90px)] w-full flex  space-y-4 items-center justify-center ">
