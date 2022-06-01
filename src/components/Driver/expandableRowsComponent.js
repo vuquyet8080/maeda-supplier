@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function ExpandableRowsComponent() {
   return (
-    <div className="bg-linen h-20 flex items-center gap-x-5 px-5">
+    <div className="bg-linen h-20 flex items-center gap-x-5 px-5 ltr:flex-row-reverse">
       <button
         type="button"
         className="bg-link-water h-10 rounded-md hover:cursor-pointer hover:bg-opacity-80 flex items-center"
