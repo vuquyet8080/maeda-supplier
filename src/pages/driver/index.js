@@ -1,12 +1,13 @@
 /* eslint-disable no-underscore-dangle */
 // eslint-disable-next-line no-underscore-dangle
 import { getAmountEarn, getDrivers } from 'actions/driver';
+import CustomInput from 'components/CustomInput';
+import ExpandableRowsComponent from 'components/Driver/expandableRowsComponent';
 import SelectBox from 'components/SelectBox';
 import TableData from 'components/TableData';
 import { columnsTableDriver } from 'constants/columsTable/columsDriver';
 import { cloneDeep, isEmpty } from 'lodash';
-import React, { useEffect, useRef, useState, useMemo } from 'react';
-import CustomInput from 'components/CustomInput';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 const status = ['active', 'deactivate'];
 
@@ -126,7 +127,14 @@ export default function Driver() {
         </div>
       </div>
       <div className="mt-4">
-        <TableData columns={columnsTableDriver} data={dataDriver} isLoading={isLoading} />
+        <TableData
+          columns={columnsTableDriver}
+          data={dataDriver}
+          isLoading={isLoading}
+          expandableRows
+          expandableRowsComponent={ExpandableRowsComponent}
+          selectableRows
+        />
       </div>
     </div>
   );

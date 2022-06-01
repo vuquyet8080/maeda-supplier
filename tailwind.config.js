@@ -4,6 +4,9 @@ module.exports = {
     extend: {
       colors: {
         'primary-red': '#BE2448',
+        linen: '#FCF5F2',
+        'green-primary': '#26C960',
+        'link-water': '#E0EFF7',
       },
     },
     screens: {

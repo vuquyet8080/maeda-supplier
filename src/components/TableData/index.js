@@ -2,7 +2,7 @@ import React from 'react';
 import DataTable, { createTheme } from 'react-data-table-component';
 import { customStyleTable } from './table.style';
 
-export default function TableData({ columns, data, isLoading }) {
+export default function TableData({ columns, data, isLoading, ...props }) {
   return (
     <div>
       <DataTable
@@ -14,6 +14,10 @@ export default function TableData({ columns, data, isLoading }) {
         progressPending={isLoading}
         theme="solarized"
         customStyles={customStyleTable}
+        expandableRows
+        expandableRowsHideExpander
+        expandOnRowClicked
+        {...props}
       />
 
       {/* <DataTable columns={columns} data={data} direction="LTR" progressPending={isLoading} theme="solarized" /> */}
@@ -29,13 +33,7 @@ createTheme('solarized', {
   divider: {
     default: '#D8DCD6',
   },
-  button: {
-    default: '#2aa198',
-    // hover: 'rgba(0,0,0,.08)',
-    hover: 'red',
-    focus: 'rgba(255,255,255,.12)',
-    disabled: 'rgba(255, 255, 255, .34)',
-  },
+  button: {},
   sortFocus: {
     default: '#2aa198',
   },
