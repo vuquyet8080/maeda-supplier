@@ -1,7 +1,7 @@
 export const columnsTableTransactionDriver = [
   {
     name: 'Order ID',
-    selector: (row) => row.id,
+    selector: (row) => row.order_number,
   },
   {
     name: 'Type',
@@ -9,10 +9,10 @@ export const columnsTableTransactionDriver = [
   },
   {
     name: 'Value ',
-    selector: (row) => row.value,
+    selector: (row) => row.amount,
   },
   {
     name: 'Date ',
-    selector: (row) => row.date,
+    selector: (row) => row.created_at,
   },
 ];

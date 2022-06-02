@@ -33,3 +33,15 @@ export const getInfoDriverDetail = ({ id }) =>
       method: 'GET',
     },
   });
+
+export const getTransactionHistory = ({ page, limit, id }) =>
+  fetchApi({
+    url: `${DRIVER_DETAIL}/${id}/transactions`,
+    options: {
+      method: 'GET',
+    },
+    params: {
+      page,
+      limit,
+    },
+  });

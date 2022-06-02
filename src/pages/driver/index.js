@@ -16,7 +16,7 @@ export default function Driver() {
   const [searchById, setSearchById] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(1);
+  const [perPage, setPerPage] = useState(20);
 
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
@@ -68,7 +68,7 @@ export default function Driver() {
   const onGetEarnAmount = async (id) => getAmountEarn({ id });
 
   useEffect(() => {
-    onGetDriver();
+    onGetDriver(1);
   }, [searchByName, searchById, statusFilter, perPage]);
 
   useEffect(() => {
@@ -109,10 +109,6 @@ export default function Driver() {
     }
   };
   // filter
-
-  // action ExpandableRowsComponent
-
-  // action ExpandableRowsComponent
 
   // pagi
   const handlePageChange = (page) => {
@@ -157,7 +153,7 @@ export default function Driver() {
           selectableRows
           // pagi
           paginationPerPage={perPage}
-          paginationRowsPerPageOptions={[1, 10, 20, 30, 50]}
+          paginationRowsPerPageOptions={[10, 20, 30, 50]}
           pagination
           paginationServer
           paginationTotalRows={totalRows}

@@ -11,7 +11,6 @@ export default function DriverDetail() {
   const categories = ['Profile', 'Transaction History'];
   const router = useRouter();
   const idDriver = router.query?.pid;
-  console.log('idDriver', idDriver);
 
   return (
     <div className="w-full  md:pt-12  pt-6">
@@ -41,7 +40,7 @@ export default function DriverDetail() {
               <DataProfile idDriver={idDriver} />
             </Tab.Panel>
             <Tab.Panel>
-              <DataTableTransaction />
+              <DataTableTransaction idDriver={idDriver} />
             </Tab.Panel>
           </Tab.Panels>
         </div>
