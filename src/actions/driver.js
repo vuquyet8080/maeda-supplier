@@ -1,14 +1,14 @@
-import { AMOUNT_EARN, DRIVER } from 'constants/request';
+import { AMOUNT_EARN, DRIVER, DRIVER_DETAIL } from 'constants/request';
 import fetchApi from 'helper/fetchApi';
 
-export const getDrivers = ({ offset, limit, status, idNumber, name }) =>
+export const getDrivers = ({ page, limit, status, idNumber, name }) =>
   fetchApi({
     url: DRIVER,
     options: {
       method: 'GET',
     },
     params: {
-      offset,
+      page,
       limit,
       filters: {
         status,
@@ -21,6 +21,14 @@ export const getDrivers = ({ offset, limit, status, idNumber, name }) =>
 export const getAmountEarn = ({ id }) =>
   fetchApi({
     url: `${AMOUNT_EARN}/${id}`,
+    options: {
+      method: 'GET',
+    },
+  });
+
+export const getInfoDriverDetail = ({ id }) =>
+  fetchApi({
+    url: `${DRIVER_DETAIL}/${id}`,
     options: {
       method: 'GET',
     },

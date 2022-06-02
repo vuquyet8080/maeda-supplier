@@ -1,10 +1,14 @@
+/* eslint-disable no-underscore-dangle */
 import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 
 function ExpandableRowsComponent({ data }) {
   const router = useRouter();
   const onEdit = () => {
-    router.push('/driver/profile');
+    router.push({
+      pathname: '/driver/detail/[pid]',
+      query: { pid: data?._id },
+    });
   };
 
   return (

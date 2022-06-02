@@ -15,6 +15,8 @@ export default function Driver() {
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [totalRows, setTotalRows] = useState(0);
+  const [perPage, setPerPage] = useState(1);
 
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
@@ -43,19 +45,20 @@ export default function Driver() {
   const [dataDriver, setData] = useState([]);
   const flagGetDataEarn = useRef(false);
 
-  const onGetDriver = async () => {
+  const onGetDriver = async (page = 1) => {
     try {
       if (isLoading) return;
       setIsLoading(true);
       const response = await getDrivers({
-        offset: 1,
-        limit: 10,
+        page,
+        limit: perPage,
         status: statusFilter,
         idNumber: searchById,
         name: searchByName,
       });
       flagGetDataEarn.current = false;
       setData(response?.data?.data?.results);
+      setTotalRows(response.data.data.total / perPage);
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -66,7 +69,7 @@ export default function Driver() {
 
   useEffect(() => {
     onGetDriver();
-  }, [searchByName, searchById, statusFilter]);
+  }, [searchByName, searchById, statusFilter, perPage]);
 
   useEffect(() => {
     const onFetchDataEarn = async () => {
@@ -111,6 +114,16 @@ export default function Driver() {
 
   // action ExpandableRowsComponent
 
+  // pagi
+  const handlePageChange = (page) => {
+    onGetDriver(page);
+  };
+
+  const handlePerRowsChange = async (newPerPage, page) => {
+    setPerPage(newPerPage);
+  };
+  //pagi
+
   return (
     <div>
       <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4">
@@ -142,6 +155,16 @@ export default function Driver() {
           // eslint-disable-next-line react/no-unstable-nested-components
           expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
           selectableRows
+          // pagi
+          paginationPerPage={perPage}
+          paginationRowsPerPageOptions={[1, 10, 20, 30, 50]}
+          pagination
+          paginationServer
+          paginationTotalRows={totalRows}
+          onChangeRowsPerPage={handlePerRowsChange}
+          onChangePage={handlePageChange}
+
+          //pagi
         />
       </div>
     </div>

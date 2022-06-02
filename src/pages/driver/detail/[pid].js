@@ -1,13 +1,18 @@
 import { Tab } from '@headlessui/react';
 import DataProfile from 'components/DriverProfile/DataProfile';
 import DataTableTransaction from 'components/DriverProfile/DataTableTransaction';
+import { useRouter } from 'next/router';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+export default function DriverDetail() {
   const categories = ['Profile', 'Transaction History'];
+  const router = useRouter();
+  const idDriver = router.query?.pid;
+  console.log('idDriver', idDriver);
+
   return (
     <div className="w-full  md:pt-12  pt-6">
       <Tab.Group>
@@ -33,7 +38,7 @@ export default function Example() {
           <Tab.Panels>
             <Tab.Panel className="px-5 md:px-10">
               <div className="text-2xl font-bold">Driver Portal</div>
-              <DataProfile />
+              <DataProfile idDriver={idDriver} />
             </Tab.Panel>
             <Tab.Panel>
               <DataTableTransaction />
