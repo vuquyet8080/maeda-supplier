@@ -5,14 +5,12 @@ const useDataTable = () => {
   const [totalRows, setTotalRows] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState([]);
-
   const [limit, setLimit] = useState(20);
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  const handlePerRowsChange = async (newPerPage, page) => {
+  const handlePerRowsChange = async (newPerPage) => {
     setLimit(newPerPage);
   };
   return {

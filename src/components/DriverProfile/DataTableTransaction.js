@@ -17,7 +17,6 @@ export default function DataTableTransaction({ idDriver }) {
     setData,
     setTotalRows,
   } = useDataTable();
-  console.log('data', data);
 
   const onGetTransactionHistory = async (page = 1) => {
     try {
@@ -29,7 +28,7 @@ export default function DataTableTransaction({ idDriver }) {
         id: idDriver,
       });
       setData(response?.data?.data?.results);
-      setTotalRows(response.data.data.total / limit);
+      setTotalRows(Math.ceil(response.data.data.total / limit));
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -37,9 +36,8 @@ export default function DataTableTransaction({ idDriver }) {
     }
   };
   useEffect(() => {
-    // console.log('currentPage', currentPage);
-    onGetTransactionHistory();
-  }, [currentPage]);
+    onGetTransactionHistory(currentPage);
+  }, [currentPage, limit]);
   return (
     <TableData
       columns={columnsTableTransactionDriver}
@@ -47,21 +45,12 @@ export default function DataTableTransaction({ idDriver }) {
       isLoading={isLoading}
       expandableRows={false}
       selectableRows
-      // expandableRowsComponent={() => (
-      //   <ExpandableRowsComponent onEdit={onEdit} data={(row) => row} />
-      // )}
-      // eslint-disable-next-line react/no-unstable-nested-components
-      // selectableRows
-
-      // pagination
-      paginationPerPage={limit}
-      paginationRowsPerPageOptions={[10, 20, 30, 50]}
       pagination
+      paginationRowsPerPageOptions={[10, 20, 30, 50]}
       paginationServer
       paginationTotalRows={totalRows}
       onChangeRowsPerPage={handlePerRowsChange}
       onChangePage={handlePageChange}
-      // pagination
     />
   );
 }

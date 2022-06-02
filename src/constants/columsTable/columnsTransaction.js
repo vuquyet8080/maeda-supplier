@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export const columnsTableTransactionDriver = [
   {
     name: 'Order ID',
@@ -5,7 +7,7 @@ export const columnsTableTransactionDriver = [
   },
   {
     name: 'Type',
-    selector: (row) => row.type,
+    selector: (row) => row.payment_method,
   },
   {
     name: 'Value ',
@@ -13,6 +15,6 @@ export const columnsTableTransactionDriver = [
   },
   {
     name: 'Date ',
-    selector: (row) => row.created_at,
+    selector: (row) => format(new Date(row.created_at), 'yyyy-MM-dd -:- HH:mm'),
   },
 ];
