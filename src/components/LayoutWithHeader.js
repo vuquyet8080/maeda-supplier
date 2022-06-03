@@ -78,23 +78,6 @@ function LayoutWithHeader({ children }) {
   if (typeof window === 'undefined') return null;
 
   const renderChildren = () => {
-    // if (session || router.pathname === '/login') {
-    //   return (
-    //     <div
-    //       className={`w-full  transition duration-350 ease-linear ${
-    //         // collapse ? 'rtl:lg:pr-[58px] ltr:lg:pl-[58px]' : 'rtl:lg:pr-[250px] ltr:lg:pl-[250px]'
-    //         collapse
-    //           ? 'rtl:lg:-translate-x-[58px] ltr:lg:translate-x-[58px] lg:w-[calc(100vw-58px)] '
-    //           : 'rtl:lg:-translate-x-[250px] ltr:lg:translate-x-[250px] lg:w-[calc(100vw-250px)] '
-    //       } ${
-    //         collapse ? 'rtl:pr-[58px] ltr:pl-[58px] rtl:lg:pr-0 ltr:lg:pl-0' : 'rtl:pr-0 ltr:pl-0'
-    //       }
-    //       `}
-    //     >
-    //       {children}
-    //     </div>
-    //   );
-    // }
     if (session) {
       return (
         <div
@@ -104,7 +87,9 @@ function LayoutWithHeader({ children }) {
               ? 'rtl:lg:-translate-x-[58px] ltr:lg:translate-x-[58px] lg:w-[calc(100vw-58px)] '
               : 'rtl:lg:-translate-x-[250px] ltr:lg:translate-x-[250px] lg:w-[calc(100vw-250px)] '
           } ${
-            collapse ? 'rtl:pr-[58px] ltr:pl-[58px] rtl:lg:pr-0 ltr:lg:pl-0' : 'rtl:pr-0 ltr:pl-0'
+            collapse
+              ? 'rtl:pr-[58px] ltr:pl-[58px] rtl:lg:pr-0 ltr:lg:pl-0'
+              : 'rtl:lg:pr-0 ltr:lg:pl-0 rtl:pr-[58px] ltr:pl-[58px]'
           }
           `}
         >
