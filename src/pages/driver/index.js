@@ -24,7 +24,7 @@ export default function Driver() {
     totalRows,
     setTotalRows,
     currentPage,
-    data,
+    data: dataDriver,
     setData,
   } = useDataTable();
 
@@ -84,16 +84,16 @@ export default function Driver() {
 
   useEffect(() => {
     const onFetchDataEarn = async () => {
-      if (!isEmpty(data) && flagGetDataEarn.current === false) {
-        const request = data.map((item) => onGetEarnAmount(item._id));
+      if (!isEmpty(dataDriver) && flagGetDataEarn.current === false) {
+        const request = dataDriver.map((item) => onGetEarnAmount(item._id));
         const amountEarns = [];
         await Promise.all(request).then((responseAmountEarns) => {
           responseAmountEarns.map((itemAmountResponse) =>
             amountEarns.push(itemAmountResponse.data)
           );
         });
-        const newDataDriver = cloneDeep(data);
-        data.map((itemDriver, index) => {
+        const newDataDriver = cloneDeep(dataDriver);
+        dataDriver.map((itemDriver, index) => {
           amountEarns.map((item) => {
             if (itemDriver._id === item.driver_id) {
               newDataDriver[index].earnAmount = 200;
@@ -107,7 +107,7 @@ export default function Driver() {
       }
     };
     onFetchDataEarn();
-  }, [data]);
+  }, [dataDriver]);
 
   const handleChange = (e, type) => {
     if (type === 'name') {
@@ -142,7 +142,7 @@ export default function Driver() {
           // eslint-disable-next-line react/no-unstable-nested-components
           expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
           columns={columnsTableDriver}
-          data={data}
+          data={dataDriver}
           isLoading={isLoading}
           selectableRows
           pagination
