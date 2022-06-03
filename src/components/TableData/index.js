@@ -5,7 +5,6 @@ import { customStyleTable } from './table.style';
 
 export default function TableData({ columns, data, isLoading, ...props }) {
   const { locale } = useRouter();
-  console.log('locale, locales, asPath', locale);
 
   return (
     <div>

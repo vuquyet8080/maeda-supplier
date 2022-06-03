@@ -17,7 +17,6 @@ export default function DataTableTransaction({ idDriver }) {
     setData,
     setTotalRows,
   } = useDataTable();
-
   const onGetTransactionHistory = async (page = 1) => {
     try {
       if (isLoading) return;

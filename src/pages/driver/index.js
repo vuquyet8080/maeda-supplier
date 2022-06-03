@@ -8,6 +8,7 @@ import { columnsTableDriver } from 'constants/columsTable/columsDriver';
 import useDataTable from 'hooks/useDataTable';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import ExpandableRowsComponent from 'components/Driver/expandableRowsComponent';
 
 const status = ['active', 'deactivate'];
 
@@ -137,10 +138,12 @@ export default function Driver() {
       </div>
       <div className="mt-4">
         <TableData
+          expandableRows
+          // eslint-disable-next-line react/no-unstable-nested-components
+          expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
           columns={columnsTableDriver}
           data={data}
           isLoading={isLoading}
-          expandableRows={false}
           selectableRows
           pagination
           paginationRowsPerPageOptions={[10, 20, 30, 50]}
