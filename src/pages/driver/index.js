@@ -2,10 +2,10 @@
 // eslint-disable-next-line no-underscore-dangle
 import { getAmountEarn, getDrivers } from 'actions/driver';
 import CustomInput from 'components/CustomInput';
-import ExpandableRowsComponent from 'components/Driver/expandableRowsComponent';
 import SelectBox from 'components/SelectBox';
 import TableData from 'components/TableData';
 import { columnsTableDriver } from 'constants/columsTable/columsDriver';
+import useDataTable from 'hooks/useDataTable';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
@@ -15,8 +15,19 @@ export default function Driver() {
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(20);
+
+  const {
+    handlePageChange,
+    handlePerRowsChange,
+    limit,
+    totalRows,
+    setTotalRows,
+    currentPage,
+    data,
+    setData,
+  } = useDataTable();
+
+  // const [dataDriver, setData] = useState([]);
 
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
@@ -42,7 +53,6 @@ export default function Driver() {
   // filter
 
   // data table driver
-  const [dataDriver, setData] = useState([]);
   const flagGetDataEarn = useRef(false);
 
   const onGetDriver = async (page = 1) => {
@@ -51,14 +61,14 @@ export default function Driver() {
       setIsLoading(true);
       const response = await getDrivers({
         page,
-        limit: perPage,
+        limit,
         status: statusFilter,
         idNumber: searchById,
         name: searchByName,
       });
       flagGetDataEarn.current = false;
       setData(response?.data?.data?.results);
-      setTotalRows(response.data.data.total / perPage);
+      setTotalRows(response.data.data.total / limit);
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -68,21 +78,21 @@ export default function Driver() {
   const onGetEarnAmount = async (id) => getAmountEarn({ id });
 
   useEffect(() => {
-    onGetDriver(1);
-  }, [searchByName, searchById, statusFilter, perPage]);
+    onGetDriver(currentPage);
+  }, [searchByName, searchById, statusFilter, limit, currentPage]);
 
   useEffect(() => {
     const onFetchDataEarn = async () => {
-      if (!isEmpty(dataDriver) && flagGetDataEarn.current === false) {
-        const request = dataDriver.map((item) => onGetEarnAmount(item._id));
+      if (!isEmpty(data) && flagGetDataEarn.current === false) {
+        const request = data.map((item) => onGetEarnAmount(item._id));
         const amountEarns = [];
         await Promise.all(request).then((responseAmountEarns) => {
           responseAmountEarns.map((itemAmountResponse) =>
             amountEarns.push(itemAmountResponse.data)
           );
         });
-        const newDataDriver = cloneDeep(dataDriver);
-        dataDriver.map((itemDriver, index) => {
+        const newDataDriver = cloneDeep(data);
+        data.map((itemDriver, index) => {
           amountEarns.map((item) => {
             if (itemDriver._id === item.driver_id) {
               newDataDriver[index].earnAmount = 200;
@@ -96,10 +106,7 @@ export default function Driver() {
       }
     };
     onFetchDataEarn();
-  }, [dataDriver]);
-  // data table driver
-
-  // filter
+  }, [data]);
 
   const handleChange = (e, type) => {
     if (type === 'name') {
@@ -108,17 +115,6 @@ export default function Driver() {
       setSearchById(e.target.value);
     }
   };
-  // filter
-
-  // pagi
-  const handlePageChange = (page) => {
-    onGetDriver(page);
-  };
-
-  const handlePerRowsChange = async (newPerPage, page) => {
-    setPerPage(newPerPage);
-  };
-  //pagi
 
   return (
     <div>
@@ -142,25 +138,16 @@ export default function Driver() {
       <div className="mt-4">
         <TableData
           columns={columnsTableDriver}
-          data={dataDriver}
+          data={data}
           isLoading={isLoading}
-          expandableRows
-          // expandableRowsComponent={() => (
-          //   <ExpandableRowsComponent onEdit={onEdit} data={(row) => row} />
-          // )}
-          // eslint-disable-next-line react/no-unstable-nested-components
-          expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
+          expandableRows={false}
           selectableRows
-          // pagi
-          paginationPerPage={perPage}
-          paginationRowsPerPageOptions={[10, 20, 30, 50]}
           pagination
+          paginationRowsPerPageOptions={[10, 20, 30, 50]}
           paginationServer
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}
           onChangePage={handlePageChange}
-
-          //pagi
         />
       </div>
     </div>
