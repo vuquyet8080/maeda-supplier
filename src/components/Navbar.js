@@ -3,7 +3,6 @@ import { delay } from 'helper/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import NavbarTooltip from './NavbarTooltip';
 
 function Navbar({ isLogin, collapse, handleCollapse }) {
   const [showMenuText, setShowMenuText] = useState(true);
@@ -33,6 +32,7 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
   ];
 
   if (!isLogin) return null;
+
   return (
     <div
       className={`bg-gray-100 w-full ${
@@ -47,16 +47,14 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
                 className={`${
                   router.pathname.includes(menu.url) ? 'bg-red-400 text-white font-bold' : ''
                 } ltr:flex-row-reverse flex items-center justify-end py-2 rounded-md w-full hover:bg-red-400 relative group hover:text-white ${
-                  collapse && showMenuText ? 'flex justify-center items-center' : 'space-x-2'
-                }`}
+                  collapse && showMenuText ? 'flex justify-center items-center' : 'space-x-2 pl-1'
+                }
+                `}
               >
                 <span className={`text-sm ${showMenuText ? 'block px-2' : 'hidden'}`}>
                   {menu.name}
                 </span>
-
                 <div className="space-x-0 m-0 p-0">{menu.icon}</div>
-
-                {/* {collapse && <NavbarTooltip title={menu.name} />} */}
               </a>
             </Link>
           ))}
