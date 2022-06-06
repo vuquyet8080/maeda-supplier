@@ -19,7 +19,6 @@
     "selectStatus":"Select Status",
     "active":"Active",
     "deActive":"Deactivate"
-
   },
   "table":{
     "rowsPerPageText":"Rows per page:",

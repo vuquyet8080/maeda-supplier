@@ -11,10 +11,15 @@ import useDataTable from 'hooks/useDataTable';
 import { useTableHeight } from 'hooks/useTableHeight';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-
-const status = ['active', 'deactivate'];
+import { useTranslation } from 'react-i18next';
 
 export default function Driver() {
+  const { t } = useTranslation();
+
+  const statusList = [
+    { id: '1', value: 'active', name: t('driver.active') },
+    { id: '2', value: 'deactivate', name: t('driver.deActive') },
+  ];
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,22 +50,21 @@ export default function Driver() {
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
   const statusFilter = useMemo(
-    () => selectedPersons.map((itemFilter) => ({ value: itemFilter })),
+    () => selectedPersons.map((itemFilter) => ({ value: itemFilter.value })),
     [selectedPersons]
   );
-  const isSelected = (value) => !!selectedPersons.find((el) => el === value);
-
-  const removeItem = (person) => {
-    const removedSelection = selectedPersons.filter((selected) => selected !== person);
+  const isSelected = (item) => !!selectedPersons.find((el) => el.id === item.id);
+  const removeItem = (selectItem) => {
+    const removedSelection = selectedPersons.filter((item) => item.id !== selectItem.id);
     setSelectedPersons(removedSelection);
   };
 
-  const handleSelection = (person) => {
-    const selectedResult = selectedPersons.filter((selected) => selected === person);
+  const handleSelection = (selectItem) => {
+    const selectedResult = selectedPersons.filter((item) => item.id === selectItem.id);
     if (selectedResult.length) {
-      removeItem(person);
+      removeItem(selectItem);
     } else {
-      setSelectedPersons((currents) => [...currents, person]);
+      setSelectedPersons((currents) => [...currents, selectItem]);
     }
   };
   // filter
@@ -138,7 +142,7 @@ export default function Driver() {
             valueSelect={selectedPersons}
             onRemove={removeItem}
             handleSelection={handleSelection}
-            optionData={status}
+            optionData={statusList}
             isSelected={isSelected}
           />
         </div>

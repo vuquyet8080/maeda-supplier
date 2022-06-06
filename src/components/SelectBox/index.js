@@ -11,7 +11,6 @@ export default function SelectBox({
   isSelected,
 }) {
   const { t } = useTranslation();
-
   return (
     <Listbox as="div" className="gap-1 h-full" value={valueSelect} onChange={handleSelection}>
       {({ open }) => (
@@ -24,21 +23,21 @@ export default function SelectBox({
                 </div>
               )}
               <div className="gap-2 flex flex-wrap ">
-                {valueSelect.map((value) => (
+                {valueSelect.map((item) => (
                   <div
-                    key={value}
+                    key={item?.id}
                     className="inline-flex items-center rounded bg-gray-200 px-2 py-1 h-6 "
                   >
                     <button
                       type="button"
                       className="bg-gray-100 rounded-full cursor-pointer"
-                      onClick={() => onRemove(value)}
+                      onClick={() => onRemove(item)}
                     >
                       <span className="pointer-events-none">
                         <XIcon className="h-3 w-3" aria-hidden="true" />
                       </span>
                     </button>
-                    <div className="ml-3 text-xs ">{value}</div>
+                    <div className="ml-3 text-xs ">{item?.name}</div>
                   </div>
                 ))}
               </div>
@@ -59,10 +58,10 @@ export default function SelectBox({
               static
               className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5"
             >
-              {optionData?.map((value) => {
-                const selected = isSelected(value);
+              {optionData?.map((item) => {
+                const selected = isSelected(item);
                 return (
-                  <Listbox.Option key={value} value={value}>
+                  <Listbox.Option key={item?.id} value={item}>
                     {({ active }) => (
                       <div
                         className={`${
@@ -72,7 +71,7 @@ export default function SelectBox({
                         <span
                           className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}
                         >
-                          {value}
+                          {item?.name}
                         </span>
                         {selected && (
                           <span

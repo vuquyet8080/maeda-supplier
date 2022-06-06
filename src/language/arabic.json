@@ -16,7 +16,9 @@
     "point":"نقطة هدية",
     "edit":"تحرير البيانات",
     "isPaidByCompany":"بدوره من تدفعه الشركة",
-    "selectStatus":"حدد الحالة"
+    "selectStatus":"حدد الحالة",
+     "active":"نشيط",
+    "deActive":"تعطيل"
 
   },
     "table":{
