@@ -10,7 +10,7 @@ import 'styles/globals.scss';
 
 i18next.use(initReactI18next).init({
   interpolation: { escapeValue: false }, // React already does escaping
-  lng: 'ar', // language to use
+  lng: 'en', // language to use
   debug: true,
   resources: {
     en: {

@@ -3,7 +3,8 @@
     "driver":"Driver",
     "dashboard":"DashBoard",
     "logout":"Sign Out",
-    "login":"Sign In"
+    "login":"Sign In",
+    "ChangeLanguage":"ChangeLanguage"
   },
   "driver":{
     "name":"Name",
@@ -15,12 +16,23 @@
     "mainBalance":"Main balance",
     "point":"Gift point",
     "edit":"Edit Data",
-    "isPaidByCompany":"Turn of IsPaidByCompany",
+    "isPaidByCompany":"Turn of IsPPaidByCompany",
     "selectStatus":"Select Status",
     "active":"Active",
     "deActive":"Deactivate",
     "driverName":"Driver Name",
     "driverId":"Driver Id"
+  },
+  "login":{
+    "title":"Sign In",
+    "placePassword":"Password",
+    "placeEmail":"Email",
+    "login":"Login",
+    "wrongEmail":"Wrong email",
+    "longEmailOrPass":"Your password must be at least 6 characters long",
+    "emailNotFound":"Email not found",
+    "passwordNotMatch":"Password does not match"
+
   },
   "driverDetail":{
     "profile":"Profile",

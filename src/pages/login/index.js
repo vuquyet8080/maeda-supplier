@@ -4,6 +4,7 @@ import { delay } from 'helper/utils';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { mailRegExp } from 'utils/validator';
 
 function Login() {
@@ -13,6 +14,7 @@ function Login() {
 
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -34,11 +36,11 @@ function Login() {
   const handleSubmit = async () => {
     let flagError = false;
     if (!mailRegExp.test(email)) {
-      setEmailError('بريد إلكتروني خاطئ');
+      setEmailError(t('login.wrongEmail'));
       flagError = true;
     }
     if (password.length < 6) {
-      setPasswordError('يجب أن تتكون كلمة المرور الخاصة بك من 6 أحرف على الأقل');
+      setPasswordError(t('login.longEmailOrPass'));
       flagError = true;
     }
     if (flagError) {
@@ -55,9 +57,9 @@ function Login() {
       //
       await delay(100).then(() => setLoading(false));
       if (result?.error === 'Auth failed, email not found') {
-        toastMessages('error', 'البريد الإلكتروني غير موجود');
+        toastMessages('error', t('login.emailNotFound'));
       } else if (result?.error === `Password doesn't match`) {
-        toastMessages('error', 'كلمة المرور غير متطابقة');
+        toastMessages('error', t('login.passwordNotMatch'));
       }
       if (result?.url) {
         router.push(result?.url);
@@ -70,12 +72,12 @@ function Login() {
   return (
     <div className="flex items-center justify-center h-screen drop-shadow-lg px-6 ">
       <div className="drop-shadow-sm border-y-zinc-100 border  rounded-lg space-y-8 p-8 bg-white md:w-1/2 xl:w-96  w-full md:px-12 ">
-        <p className="text-center text-3xl font-semibold">تسجيل الدخول</p>
+        <p className="text-center text-3xl font-semibold">{t('login.title')}</p>
         <div className="grid grid-cols-12 gap-x-2    items-center max-w-3xl w-full ">
           <div className="col-span-12 mb-4 h-16 ">
             <input
               dir="rtl"
-              placeholder="أدخل بريدك الإلكتروني"
+              placeholder={t('login.placeEmail')}
               type="text"
               className="w-full border border-slate-400 rounded-md px-3 py-2  placeholder:text-gray-300 placeholder:text-sm  text-sm font-normal"
               onChange={(e) => handleChange(e, 'email')}
@@ -87,7 +89,7 @@ function Login() {
           <div className="col-span-12 ">
             <input
               dir="rtl"
-              placeholder="كلمه السر"
+              placeholder={t('login.placePassword')}
               type="password"
               className="w-full border border-slate-400 rounded-md px-3 py-2 placeholder:text-gray-300 placeholder:text-sm text-sm font-normal"
               onChange={(e) => handleChange(e, 'password')}
@@ -104,7 +106,7 @@ function Login() {
             onClick={handleSubmit}
             disabled={loading}
           >
-            كلمه السر
+            {t('login.login')}
           </button>
           <div className="absolute right-0  w-6 h-6 mr-4">{loading && <Spin />}</div>
         </div>

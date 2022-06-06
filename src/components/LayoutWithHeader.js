@@ -105,7 +105,7 @@ function LayoutWithHeader({ children }) {
     return (
       <div className="h-[calc(100vh-90px)] w-full flex  space-y-4 items-center justify-center ">
         <Link href="/login">
-          <a className="flex items-center btn-primary px-8 py-3 rounded-md ">تسجيل الدخول</a>
+          <a className="flex items-center btn-primary px-8 py-3 rounded-md ">{t('menu.login')}</a>
         </Link>
       </div>
     );

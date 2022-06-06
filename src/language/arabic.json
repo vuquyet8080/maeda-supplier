@@ -3,7 +3,9 @@
     "driver":"سائق",
     "dashboard":"لوحة القيادة",
     "logout":"خروج",
-    "login":"تسجيل الدخول"
+    "login":"تسجيل الدخول",
+    "ChangeLanguage":"ChangeLanguage"
+
   },
   "driver":{
     "name":"اسم",
@@ -21,6 +23,16 @@
     "deActive":"تعطيل",
     "driverName":"اسم السائق",
     "driverId":"معرف السائق"
+  },
+   "login":{
+    "placePassword":"كلمه السر",
+    "placeEmail":"البريد الإلكتروني",
+    "login":"تسجيل الدخول",
+    "wrongEmail":"'بريد إلكتروني خاطئ",
+    "longEmailOrPass":"يجب أن تتكون كلمة المرور الخاصة بك من 6 أحرف على الأقل",
+    "emailNotFound":"'البريد الإلكتروني غير موجود",
+    "passwordNotMatch":"كلمة المرور غير متطابقة"
+
   },
     "driverDetail":{
     "profile":"الملف الشخصي",
