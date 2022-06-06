@@ -1,0 +1,28 @@
+{
+  "menu":{
+    "driver":"Driver",
+    "dashboard":"DashBoard",
+    "logout":"Sign Out",
+    "login":"Sign In"
+  },
+  "driver":{
+    "name":"Name",
+    "id":"ID",
+    "status":"Status",
+    "rate":"Acceptance Rate",
+    "trips":"Trips",
+    "earning":"Earnings",
+    "mainBalance":"Main balance",
+    "point":"Gift point",
+    "edit":"Edit Data",
+    "isPaidByCompany":"Turn of IsPaidByCompany",
+    "selectStatus":"Select Status",
+    "active":"Active",
+    "deActive":"Deactivate"
+
+  },
+  "table":{
+    "rowsPerPageText":"Rows per page:",
+    "rangeSeparatorText":"of"
+  }
+}

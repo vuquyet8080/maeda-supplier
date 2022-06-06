@@ -1,0 +1,26 @@
+{
+  "menu":{
+    "driver":"سائق",
+    "dashboard":"لوحة القيادة",
+    "logout":"خروج",
+    "login":"تسجيل الدخول"
+  },
+  "driver":{
+    "name":"اسم",
+    "id":"بطاقة تعريف",
+    "status":"حالة",
+    "rate":"معدل القبول",
+    "trips":"رحلات",
+    "earning":"أرباح",
+    "mainBalance":"الرصيد، الحساب الرئيسي",
+    "point":"نقطة هدية",
+    "edit":"تحرير البيانات",
+    "isPaidByCompany":"بدوره من تدفعه الشركة",
+    "selectStatus":"حدد الحالة"
+
+  },
+    "table":{
+    "rowsPerPageText":"عدد النتائج بالصفحة :",
+    "rangeSeparatorText":"من"
+  }
+}

@@ -3,10 +3,12 @@ import { delay } from 'helper/utils';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Navbar({ isLogin, collapse, handleCollapse }) {
   const [showMenuText, setShowMenuText] = useState(true);
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (collapse) {
@@ -19,13 +21,13 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
   const menuItems = [
     {
       id: 1,
-      name: 'Driver',
+      name: t('menu.driver'),
       url: '/driver',
       icon: <DriverIcon />,
     },
     {
       id: 2,
-      name: 'Dashboard',
+      name: t('menu.dashboard'),
       url: '/dashboard',
       icon: <DashboardIcon />,
     },

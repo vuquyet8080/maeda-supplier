@@ -1,15 +1,16 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import DataTable, { createTheme } from 'react-data-table-component';
+import { useTranslation } from 'react-i18next';
 import { customStyleTable } from './table.style';
 
 export default function TableData({ columns, data, isLoading, ...props }) {
   const { locale } = useRouter();
+  const { t } = useTranslation();
 
   return (
     <DataTable
       fixedHeader
-      className="bg-red-500"
       highlightOnHover
       pointerOnHover
       columns={columns}
@@ -22,8 +23,8 @@ export default function TableData({ columns, data, isLoading, ...props }) {
       expandableRowsHideExpander
       expandOnRowClicked
       paginationComponentOptions={{
-        rangeSeparatorText: 'من',
-        rowsPerPageText: 'عدد النتائج بالصفحة :',
+        rangeSeparatorText: t('table.rangeSeparatorText'),
+        rowsPerPageText: t('table.rowsPerPageText'),
       }}
       paginationRowsPerPageOptions={[20, 30, 50, 100]}
       {...props}

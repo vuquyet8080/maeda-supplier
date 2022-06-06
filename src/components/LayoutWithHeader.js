@@ -5,12 +5,14 @@ import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { Fragment, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 
 function LayoutWithHeader({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [collapse, setCollapse] = useState(false);
+  const { t } = useTranslation();
 
   const handleCollapse = () => {
     setCollapse(!collapse);
@@ -27,7 +29,7 @@ function LayoutWithHeader({ children }) {
             type="button"
             className="flex items-center bg-black bg-opacity-20 hover:bg-opacity-30 focus:outline-none px-8 py-3 rounded-md text-white"
           >
-            تسجيل الدخول
+            {t('menu.login')}
           </a>
         </Link>
       );
@@ -65,7 +67,7 @@ function LayoutWithHeader({ children }) {
                   className="flex items-center rtl:justify-end btn-primary-reverse focus:outline-none px-4 py-3 rounded-md capitalize w-full"
                   onClick={signOut}
                 >
-                  تسجيل خروج
+                  {t('menu.logout')}
                 </button>
               </Menu.Item>
             </div>

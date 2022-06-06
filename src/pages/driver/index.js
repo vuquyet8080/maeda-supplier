@@ -2,15 +2,15 @@
 // eslint-disable-next-line no-underscore-dangle
 import { getAmountEarn, getDrivers } from 'actions/driver';
 import CustomInput from 'components/CustomInput';
+import ExpandableRowsComponent from 'components/Driver/expandableRowsComponent';
 import SelectBox from 'components/SelectBox';
 import TableData from 'components/TableData';
-import { columnsTableDriver } from 'constants/columsTable/columsDriver';
+import { useColumnsTableDriver } from 'constants/columsTable/columsDriver';
+import { HEADER_SCROLL_SPACE } from 'constants/screen';
 import useDataTable from 'hooks/useDataTable';
+import { useTableHeight } from 'hooks/useTableHeight';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import ExpandableRowsComponent from 'components/Driver/expandableRowsComponent';
-import { HEADER_SCROLL_SPACE } from 'constants/screen';
-import { useTableHeight } from 'hooks/useTableHeight';
 
 const status = ['active', 'deactivate'];
 
@@ -128,6 +128,7 @@ export default function Driver() {
       setSearchById(e.target.value);
     }
   };
+  const columnsTableDriver = useColumnsTableDriver();
 
   return (
     <div>

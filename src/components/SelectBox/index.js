@@ -1,8 +1,17 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon, XIcon } from '@heroicons/react/outline';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-export default function index({ valueSelect, handleSelection, onRemove, optionData, isSelected }) {
+export default function SelectBox({
+  valueSelect,
+  handleSelection,
+  onRemove,
+  optionData,
+  isSelected,
+}) {
+  const { t } = useTranslation();
+
   return (
     <Listbox as="div" className="gap-1 h-full" value={valueSelect} onChange={handleSelection}>
       {({ open }) => (
@@ -11,25 +20,25 @@ export default function index({ valueSelect, handleSelection, onRemove, optionDa
             <Listbox.Button className=" cursor-default relative w-full h-full rounded-md border border-gray-300 bg-white pl-3 pr-10 py-2 text-left focus:outline-none focus:shadow-outline-blue focus:border-blue-400 transition ease-in-out duration-150 sm:text-sm sm:leading-5">
               {!valueSelect.length && (
                 <div className="gap-2 flex flex-wrap">
-                  <span className="text-gray-300 h-6 py-1 text-sm">حدد الحالة</span>
+                  <span className="text-gray-300 h-6 py-1 text-sm">{t('driver.selectStatus')}</span>
                 </div>
               )}
               <div className="gap-2 flex flex-wrap ">
-                {valueSelect.map((person) => (
+                {valueSelect.map((value) => (
                   <div
-                    key={person}
+                    key={value}
                     className="inline-flex items-center rounded bg-gray-200 px-2 py-1 h-6 "
                   >
                     <button
                       type="button"
                       className="bg-gray-100 rounded-full cursor-pointer"
-                      onClick={() => onRemove(person)}
+                      onClick={() => onRemove(value)}
                     >
                       <span className="pointer-events-none">
                         <XIcon className="h-3 w-3" aria-hidden="true" />
                       </span>
                     </button>
-                    <div className="ml-3 text-xs ">{person}</div>
+                    <div className="ml-3 text-xs ">{value}</div>
                   </div>
                 ))}
               </div>
@@ -50,10 +59,10 @@ export default function index({ valueSelect, handleSelection, onRemove, optionDa
               static
               className="max-h-60 rounded-md py-1 text-base leading-6 shadow-xs overflow-auto focus:outline-none sm:text-sm sm:leading-5"
             >
-              {optionData?.map((person) => {
-                const selected = isSelected(person);
+              {optionData?.map((value) => {
+                const selected = isSelected(value);
                 return (
-                  <Listbox.Option key={person} value={person}>
+                  <Listbox.Option key={value} value={value}>
                     {({ active }) => (
                       <div
                         className={`${
@@ -63,7 +72,7 @@ export default function index({ valueSelect, handleSelection, onRemove, optionDa
                         <span
                           className={`${selected ? 'font-medium' : 'font-normal'} block truncate`}
                         >
-                          {person}
+                          {value}
                         </span>
                         {selected && (
                           <span
