@@ -1,6 +1,6 @@
 import { getTransactionHistory } from 'actions/driver';
 import TableData from 'components/TableData';
-import { columnsTableTransactionDriver } from 'constants/columsTable/columnsTransaction';
+import { useColumnsTableTransactionDriver } from 'constants/columsTable/columnsTransaction';
 import useDataTable from 'hooks/useDataTable';
 import React, { useEffect } from 'react';
 
@@ -17,8 +17,7 @@ export default function DataTableTransaction({ idDriver, ...props }) {
     setData,
     setTotalRows,
   } = useDataTable();
-  // const { tableHeight } = useTableHeight(95 + 105 + 65);
-  // console.log('tableHeight', tableHeight);
+  const columnsTableTransactionDriver = useColumnsTableTransactionDriver();
 
   const onGetTransactionHistory = async (page = 1) => {
     try {
@@ -45,7 +44,6 @@ export default function DataTableTransaction({ idDriver, ...props }) {
   return (
     <TableData
       fixedHeader
-      // fixedHeaderScrollHeight="440px"
       columns={columnsTableTransactionDriver}
       data={data}
       isLoading={isLoading}

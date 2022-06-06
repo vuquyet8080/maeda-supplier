@@ -147,10 +147,10 @@ export default function Driver() {
           />
         </div>
         <div className="w-full max-w-xs  h-11">
-          <CustomInput onChange={handleChange} type="name" placeholder="Name driver" />
+          <CustomInput onChange={handleChange} type="name" placeholder={t('driver.driverName')} />
         </div>
         <div className="w-full max-w-xs h-11">
-          <CustomInput onChange={handleChange} type="id" placeholder="Id driver" />
+          <CustomInput onChange={handleChange} type="id" placeholder={t('driver.driverId')} />
         </div>
       </div>
       <div className="mt-4">

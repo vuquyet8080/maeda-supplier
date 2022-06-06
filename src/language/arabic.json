@@ -18,8 +18,24 @@
     "isPaidByCompany":"بدوره من تدفعه الشركة",
     "selectStatus":"حدد الحالة",
      "active":"نشيط",
-    "deActive":"تعطيل"
-
+    "deActive":"تعطيل",
+    "driverName":"اسم السائق",
+    "driverId":"معرف السائق"
+  },
+    "driverDetail":{
+    "profile":"الملف الشخصي",
+    "transactionHistory":"تاريخ المعاملات",
+    "driverPortal":"بوابة السائق",
+    "name":"اسم:",
+    "companyName":"اسم الشركة:",
+    "phone":"رقم الهاتف:",
+    "cartId":"معرّف عربة التسوق:",
+    "city":"مدينة:",
+    "region":"منطقة:",
+     "orderId":"رقم التعريف الخاص بالطلب",
+    "type":"يكتب",
+    "value":"قيمة",
+    "date":"تاريخ"
   },
     "table":{
     "rowsPerPageText":"عدد النتائج بالصفحة :",

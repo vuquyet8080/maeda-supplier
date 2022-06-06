@@ -5,13 +5,16 @@ import { HEADER_SCROLL_SPACE } from 'constants/screen';
 import { useTableHeight } from 'hooks/useTableHeight';
 import { useRouter } from 'next/router';
 import { useRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
 export default function DriverDetail() {
-  const categories = ['Profile', 'Transaction History'];
+  const { t } = useTranslation();
+
+  const categories = [t('driverDetail.profile'), t('driverDetail.transactionHistory')];
   const router = useRouter();
   const idDriver = router.query?.pid;
   const [clientHeight, setClientHeight] = useState(0);
@@ -48,7 +51,7 @@ export default function DriverDetail() {
         <div className=" w-full">
           <Tab.Panels>
             <Tab.Panel className="px-5 md:px-10">
-              <div className="text-2xl font-bold">Driver Portal</div>
+              <div className="text-2xl font-bold">{t('driverDetail.driverPortal')}</div>
               <DataProfile idDriver={idDriver} />
             </Tab.Panel>
             <Tab.Panel>

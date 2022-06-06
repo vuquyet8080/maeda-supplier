@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { getInfoDriverDetail } from 'actions/driver';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const renderRowData = (name, value) => (
   <div className="grid md:grid-cols-3 grid-cols-2 lg:w-[650px] md:w-[450px] w-full md:mb-4 mb-3 lg:mb-6  2xl:mb-8">
@@ -10,6 +11,7 @@ const renderRowData = (name, value) => (
 );
 export default function DataProfile({ idDriver }) {
   const [dataProfile, setDataProfile] = useState();
+  const { t } = useTranslation();
 
   const fetchDataDetailDriver = async () => {
     try {
@@ -18,25 +20,25 @@ export default function DataProfile({ idDriver }) {
         data: { name, company_name, car_number, phone, city, region },
       } = response;
       setDataProfile([
-        { title: 'Name', value: name },
+        { title: t('driverDetail.name'), value: name },
         {
-          title: 'Company name',
+          title: t('driverDetail.companyName'),
           value: company_name,
         },
         {
-          title: 'Id card',
+          title: t('driverDetail.cartId'),
           value: car_number,
         },
         {
-          title: 'Phone number',
+          title: t('driverDetail.phone'),
           value: phone,
         },
         {
-          title: 'City',
+          title: t('driverDetail.city'),
           value: city,
         },
         {
-          title: 'Region',
+          title: t('driverDetail.region'),
           value: region,
         },
       ]);

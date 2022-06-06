@@ -18,7 +18,24 @@
     "isPaidByCompany":"Turn of IsPaidByCompany",
     "selectStatus":"Select Status",
     "active":"Active",
-    "deActive":"Deactivate"
+    "deActive":"Deactivate",
+    "driverName":"Driver Name",
+    "driverId":"Driver Id"
+  },
+  "driverDetail":{
+    "profile":"Profile",
+    "transactionHistory":"Transaction History",
+    "driverPortal":"Driver Portal",
+    "name":"Name",
+    "companyName":"Company name:",
+    "cartId":"Card Id:",
+    "phone":"Phone number:",
+    "city":"City:",
+    "region":"Region:",
+    "orderId":"Order Id",
+    "type":"Type",
+    "value":"Value",
+    "date":"Date"
   },
   "table":{
     "rowsPerPageText":"Rows per page:",
