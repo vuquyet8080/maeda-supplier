@@ -9,6 +9,8 @@ import useDataTable from 'hooks/useDataTable';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ExpandableRowsComponent from 'components/Driver/expandableRowsComponent';
+import { HEADER_SCROLL_SPACE } from 'constants/screen';
+import { useTableHeight } from 'hooks/useTableHeight';
 
 const status = ['active', 'deactivate'];
 
@@ -16,6 +18,16 @@ export default function Driver() {
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // header scroll
+  const [clientHeight, setClientHeight] = useState(0);
+  const refHeader = useRef(null);
+
+  useEffect(() => {
+    setClientHeight(refHeader.current.clientHeight + HEADER_SCROLL_SPACE);
+  }, []);
+  const { tableHeight } = useTableHeight(clientHeight);
+  // header scroll
 
   const {
     handlePageChange,
@@ -119,7 +131,7 @@ export default function Driver() {
 
   return (
     <div>
-      <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4">
+      <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4 " ref={refHeader}>
         <div className="w-full max-w-xs">
           <SelectBox
             valueSelect={selectedPersons}
@@ -138,15 +150,32 @@ export default function Driver() {
       </div>
       <div className="mt-4">
         <TableData
+          fixedHeader
+          fixedHeaderScrollHeight={`${tableHeight}px`}
           expandableRows
           // eslint-disable-next-line react/no-unstable-nested-components
           expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
           columns={columnsTableDriver}
-          data={dataDriver}
+          data={[
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+            ...dataDriver,
+          ]}
           isLoading={isLoading}
           selectableRows
+          // pagi
           pagination
-          paginationRowsPerPageOptions={[10, 20, 30, 50]}
           paginationServer
           paginationTotalRows={totalRows}
           onChangeRowsPerPage={handlePerRowsChange}

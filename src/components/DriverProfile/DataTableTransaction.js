@@ -4,7 +4,7 @@ import { columnsTableTransactionDriver } from 'constants/columsTable/columnsTran
 import useDataTable from 'hooks/useDataTable';
 import React, { useEffect } from 'react';
 
-export default function DataTableTransaction({ idDriver }) {
+export default function DataTableTransaction({ idDriver, ...props }) {
   const {
     handlePageChange,
     handlePerRowsChange,
@@ -17,6 +17,9 @@ export default function DataTableTransaction({ idDriver }) {
     setData,
     setTotalRows,
   } = useDataTable();
+  // const { tableHeight } = useTableHeight(95 + 105 + 65);
+  // console.log('tableHeight', tableHeight);
+
   const onGetTransactionHistory = async (page = 1) => {
     try {
       if (isLoading) return;
@@ -34,22 +37,26 @@ export default function DataTableTransaction({ idDriver }) {
       setIsLoading(false);
     }
   };
+
   useEffect(() => {
     onGetTransactionHistory(currentPage);
   }, [currentPage, limit]);
+
   return (
     <TableData
+      fixedHeader
+      // fixedHeaderScrollHeight="440px"
       columns={columnsTableTransactionDriver}
       data={data}
       isLoading={isLoading}
       expandableRows={false}
       selectableRows
       pagination
-      paginationRowsPerPageOptions={[10, 20, 30, 50]}
       paginationServer
       paginationTotalRows={totalRows}
       onChangeRowsPerPage={handlePerRowsChange}
       onChangePage={handlePageChange}
+      {...props}
     />
   );
 }

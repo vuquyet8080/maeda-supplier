@@ -7,29 +7,27 @@ export default function TableData({ columns, data, isLoading, ...props }) {
   const { locale } = useRouter();
 
   return (
-    <div>
-      <DataTable
-        className="bg-red-500"
-        highlightOnHover
-        pointerOnHover
-        columns={columns}
-        data={data}
-        direction={locale === 'ar_SA' ? 'RTL' : 'LTR'}
-        progressPending={isLoading}
-        theme="solarized"
-        customStyles={customStyleTable}
-        expandableRows
-        expandableRowsHideExpander
-        expandOnRowClicked
-        {...props}
-        paginationComponentOptions={{
-          rangeSeparatorText: 'من',
-          rowsPerPageText: 'عدد النتائج بالصفحة :',
-        }}
-      />
-
-      {/* <DataTable columns={columns} data={data} direction="LTR" progressPending={isLoading} theme="solarized" /> */}
-    </div>
+    <DataTable
+      fixedHeader
+      className="bg-red-500"
+      highlightOnHover
+      pointerOnHover
+      columns={columns}
+      data={data}
+      direction={locale === 'ar_SA' ? 'RTL' : 'LTR'}
+      progressPending={isLoading}
+      theme="solarized"
+      customStyles={customStyleTable}
+      expandableRows
+      expandableRowsHideExpander
+      expandOnRowClicked
+      paginationComponentOptions={{
+        rangeSeparatorText: 'من',
+        rowsPerPageText: 'عدد النتائج بالصفحة :',
+      }}
+      paginationRowsPerPageOptions={[20, 30, 50, 100]}
+      {...props}
+    />
   );
 }
 
