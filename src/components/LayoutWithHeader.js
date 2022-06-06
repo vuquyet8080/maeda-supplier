@@ -114,7 +114,8 @@ function LayoutWithHeader({ children }) {
       <div className="px-6 h-16 bg-primary-red flex items-center justify-between fixed w-full top-0 left-0 right-0 z-20">
         {renderLoginBtn}
       </div>
-      <div className="flex justify-between pt-[64px]">
+      {/* <div className="flex justify-between pt-[64px]"> */}
+      <div className="flex justify-between pt-[64px] h-[100vh]">
         {renderChildren()}
         <Navbar isLogin={!!session?.user} collapse={collapse} handleCollapse={handleCollapse} />
       </div>
