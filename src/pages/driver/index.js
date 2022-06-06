@@ -156,22 +156,7 @@ export default function Driver() {
           // eslint-disable-next-line react/no-unstable-nested-components
           expandableRowsComponent={({ data }) => <ExpandableRowsComponent data={data} />}
           columns={columnsTableDriver}
-          data={[
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-            ...dataDriver,
-          ]}
+          data={dataDriver}
           isLoading={isLoading}
           selectableRows
           // pagi
