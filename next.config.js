@@ -7,9 +7,10 @@ const nextConfig = {
     PREFIX_API: process.env.PREFIX_API,
   },
   i18n: {
-    locales: ['en-US', 'ar_SA'],
-    // defaultLocale: 'en-US',
-    defaultLocale: 'ar_SA',
+    locales: ['ar', 'en'],
+    defaultLocale: 'ar',
+    localeDetection: false,
+    trailingSlash: true,
   },
 };
 

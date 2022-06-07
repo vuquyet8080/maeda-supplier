@@ -15,7 +15,7 @@ export default function TableData({ columns, data, isLoading, ...props }) {
       pointerOnHover
       columns={columns}
       data={data}
-      direction={locale === 'ar_SA' ? 'RTL' : 'LTR'}
+      direction={locale === 'ar' ? 'RTL' : 'LTR'}
       progressPending={isLoading}
       theme="solarized"
       customStyles={customStyleTable}
