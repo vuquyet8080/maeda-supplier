@@ -26,6 +26,7 @@
     "driverId":"معرف السائق"
   },
    "login":{
+    "title":"تسجيل الدخول",
     "placePassword":"كلمه السر",
     "placeEmail":"البريد الإلكتروني",
     "login":"تسجيل الدخول",
