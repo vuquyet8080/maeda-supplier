@@ -4,7 +4,8 @@
     "dashboard":"لوحة القيادة",
     "logout":"خروج",
     "login":"تسجيل الدخول",
-    "ChangeLanguage":"ChangeLanguage"
+        "titleChangeLanguage":"ضبط لغة {{language}}"
+
 
   },
   "driver":{

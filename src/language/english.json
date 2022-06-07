@@ -4,7 +4,8 @@
     "dashboard":"DashBoard",
     "logout":"Sign Out",
     "login":"Sign In",
-    "ChangeLanguage":"ChangeLanguage"
+    "titleChangeLanguage":"Set {{language}} Language"
+    
   },
   "driver":{
     "name":"Name",

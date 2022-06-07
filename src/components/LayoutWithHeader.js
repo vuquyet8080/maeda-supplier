@@ -4,15 +4,42 @@ import { AUTH_STATUS } from 'constants/auth';
 import { getSession, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { Fragment, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
+
+const renderLocalesName = (locales) => {
+  switch (locales) {
+    case 'ar':
+      return 'Arabic';
+    case 'en':
+      return 'English';
+    default:
+      return '';
+  }
+};
 
 function LayoutWithHeader({ children }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [collapse, setCollapse] = useState(false);
   const { t } = useTranslation();
+  const { locales, locale } = useRouter();
+  const { asPath } = router;
+
+  //
+  useEffect(() => {
+    const dir = locale === 'ar' ? 'rtl' : 'ltr';
+    const lang = locale === 'ar' ? 'ar' : 'en';
+    const timerOutId = setTimeout(() => {
+      document.querySelector('html').setAttribute('dir', dir);
+      document.querySelector('html').setAttribute('lang', lang);
+    }, 100);
+    return () => {
+      clearTimeout(timerOutId);
+    };
+  }, [locale]);
+  //
 
   const handleCollapse = () => {
     setCollapse(!collapse);
@@ -71,11 +98,30 @@ function LayoutWithHeader({ children }) {
                 </button>
               </Menu.Item>
             </div>
+            {locales?.map(
+              (localeItem) =>
+                localeItem !== locale && (
+                  <div className="px-1 py-1" key={localeItem}>
+                    <Menu.Item>
+                      <div>
+                        <Link href={`/${localeItem}/${asPath}`} locale={false}>
+                          <a className="bg-red-700  h-full py-3 flex items-center px-4 rtl:justify-end btn-primary-reverse focus:outline-none  rounded-md capitalize w-full">
+                            {/* set {renderLocalesName(localeItem)} language */}
+                            {t('menu.titleChangeLanguage', {
+                              language: renderLocalesName(localeItem),
+                            })}
+                          </a>
+                        </Link>
+                      </div>
+                    </Menu.Item>
+                  </div>
+                )
+            )}
           </Menu.Items>
         </Transition>
       </Menu>
     );
-  }, [status]);
+  }, [status, locale, asPath]);
 
   if (typeof window === 'undefined') return null;
 
