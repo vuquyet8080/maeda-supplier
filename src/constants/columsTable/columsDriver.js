@@ -1,4 +1,14 @@
+import { isEmpty } from 'lodash';
+import { formatNumber } from 'utils/format/number';
+
 const { useTranslation } = require('react-i18next');
+
+const renderStatus = (status) => {
+  if (status) {
+    return 'active';
+  }
+  return 'inActive';
+};
 
 export const useColumnsTableDriver = () => {
   const { t } = useTranslation();
@@ -14,7 +24,7 @@ export const useColumnsTableDriver = () => {
     },
     {
       name: t('driver.status'),
-      selector: (row) => row.title,
+      selector: (row) => renderStatus(row.isActive),
     },
     {
       name: t('driver.rate'),
@@ -22,16 +32,16 @@ export const useColumnsTableDriver = () => {
     },
     {
       name: t('driver.trips'),
-      selector: (row) => row.title,
+      selector: (row) => (isEmpty(row.trips) ? 0 : formatNumber({ number: row.trips[0].count })),
     },
     {
       name: t('driver.earning'),
-      selector: (row) => (row?.earnAmount ? row?.earnAmount : 0),
+      selector: (row) => (row?.earnAmount ? formatNumber({ number: row?.earnAmount }) : 0),
     },
     {
       name: t('driver.mainBalance'),
       selector: (row) =>
-        row.balances.length > 0 ? row.balances[0].new_balance.toFixed(3) : '0.000',
+        isEmpty(row.balances) ? 0 : formatNumber({ number: row.balances[0].new_balance }),
     },
     {
       name: t('driver.point'),
