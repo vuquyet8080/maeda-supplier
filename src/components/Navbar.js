@@ -25,12 +25,12 @@ function Navbar({ isLogin, collapse, handleCollapse }) {
       url: '/driver',
       icon: <DriverIcon />,
     },
-    {
-      id: 2,
-      name: t('menu.dashboard'),
-      url: '/dashboard',
-      icon: <DashboardIcon />,
-    },
+    // {
+    //   id: 2,
+    //   name: t('menu.dashboard'),
+    //   url: '/dashboard',
+    //   icon: <DashboardIcon />,
+    // },
   ];
 
   if (!isLogin) return null;

@@ -11,12 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.scss';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
-  const { locale, push } = useRouter();
-
-  useEffect(() => {
-    const language = localStorage.getItem('language');
-    push(`/${language}`);
-  }, []);
+  const { locale } = useRouter();
 
   useEffect(() => {
     localStorage.setItem('language', locale);
