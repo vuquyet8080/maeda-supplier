@@ -23,7 +23,9 @@
      "active":"نشيط",
     "deActive":"تعطيل",
     "driverName":"اسم السائق",
-    "driverId":"معرف السائق"
+    "driverId":"معرف السائق",
+    "createAt":"إنشاء في"
+
   },
    "login":{
     "title":"تسجيل الدخول",

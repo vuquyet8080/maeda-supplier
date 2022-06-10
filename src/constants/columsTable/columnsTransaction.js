@@ -1,5 +1,5 @@
-import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next';
+import { formatDate } from 'utils/format/date';
 
 export const useColumnsTableTransactionDriver = () => {
   const { t } = useTranslation();
@@ -19,7 +19,8 @@ export const useColumnsTableTransactionDriver = () => {
     },
     {
       name: t('driverDetail.date'),
-      selector: (row) => format(new Date(row.created_at), 'yyyy-MM-dd -:- HH:mm'),
+      // selector: (row) => format(new Date(row.created_at), 'yyyy-MM-dd -:- HH:mm'),
+      selector: (row) => formatDate(row.created_at),
     },
   ];
 };

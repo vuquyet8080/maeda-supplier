@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash';
+import { formatDate } from 'utils/format/date';
 import { formatNumber } from 'utils/format/number';
 
 const { useTranslation } = require('react-i18next');
@@ -46,6 +47,11 @@ export const useColumnsTableDriver = () => {
     {
       name: t('driver.point'),
       selector: (row) => row.year,
+    },
+    {
+      name: t('driver.createAt'),
+      selector: (row) => (row?.created_at ? formatDate(row?.created_at) : ''),
+      width: '200px',
     },
   ];
 };

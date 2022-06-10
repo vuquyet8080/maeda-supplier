@@ -22,7 +22,8 @@
     "active":"Active",
     "deActive":"Deactivate",
     "driverName":"Driver Name",
-    "driverId":"Driver Id"
+    "driverId":"Driver Id",
+    "createAt":"CreateAt"
   },
   "login":{
     "title":"Sign In",
