@@ -9,6 +9,7 @@ import { I18nextProvider, initReactI18next } from 'react-i18next';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.scss';
+import 'styles/date.css';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const { locale } = useRouter();

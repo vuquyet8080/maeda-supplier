@@ -12,6 +12,7 @@ import { useTableHeight } from 'hooks/useTableHeight';
 import { cloneDeep, isEmpty } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import DateRangePicker from '@wojtekmaj/react-daterange-picker/dist/entry.nostyle';
 
 export default function Driver() {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ export default function Driver() {
   const [searchByName, setSearchByName] = useState('');
   const [searchById, setSearchById] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [valueDate, onChangeDate] = useState(null);
 
   // header scroll
   const [clientHeight, setClientHeight] = useState(0);
@@ -44,8 +46,6 @@ export default function Driver() {
     data: dataDriver,
     setData,
   } = useDataTable();
-
-  // const [dataDriver, setData] = useState([]);
 
   // filter
   const [selectedPersons, setSelectedPersons] = useState([]);
@@ -76,13 +76,17 @@ export default function Driver() {
     try {
       if (isLoading) return;
       setIsLoading(true);
-      const response = await getDrivers({
+      const filter = {
         page,
         limit,
         status: statusFilter,
         idNumber: searchById,
         name: searchByName,
-      });
+      };
+      if (!isEmpty(valueDate)) {
+        filter.date = valueDate;
+      }
+      const response = await getDrivers(filter);
       flagGetDataEarn.current = false;
       setData(response?.data?.data?.results);
       setTotalRows(response.data.data.total / limit);
@@ -96,7 +100,7 @@ export default function Driver() {
 
   useEffect(() => {
     onGetDriver(currentPage);
-  }, [searchByName, searchById, statusFilter, limit, currentPage]);
+  }, [searchByName, searchById, statusFilter, limit, currentPage, valueDate]);
 
   useEffect(() => {
     const onFetchDataEarn = async () => {
@@ -136,7 +140,10 @@ export default function Driver() {
 
   return (
     <div>
-      <div className="py-6 md:flex flex-row px-10 grid gap-y-4 md:gap-y-0 gap-x-4 " ref={refHeader}>
+      <div
+        className="py-6 md:flex flex-row lg:px-10 px-4 grid grid-cols-1 gap-y-4 md:gap-y-0 gap-x-4 "
+        ref={refHeader}
+      >
         <div className="w-full max-w-xs">
           <SelectBox
             valueSelect={selectedPersons}
@@ -149,8 +156,21 @@ export default function Driver() {
         <div className="w-full max-w-xs  h-11">
           <CustomInput onChange={handleChange} type="name" placeholder={t('driver.driverName')} />
         </div>
-        <div className="w-full max-w-xs h-11">
+        <div className="w-full max-w-xs h-11 ">
           <CustomInput onChange={handleChange} type="id" placeholder={t('driver.driverId')} />
+        </div>
+        <div
+          dir="ltr"
+          className="px-3 max-w-xs h-11 border-slate-300 border rounded-md items-center justify-end flex"
+        >
+          <DateRangePicker
+            rangeDivider="--"
+            onChange={onChangeDate}
+            value={valueDate}
+            className="text-xs"
+            format="y-MM-dd"
+            disableClock
+          />
         </div>
       </div>
       <div className="mt-4">
