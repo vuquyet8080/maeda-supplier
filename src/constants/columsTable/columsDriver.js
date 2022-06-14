@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import { formatDate } from 'utils/format/date';
-import { formatNumber } from 'utils/format/number';
+import { calculateAcceptRate, formatNumber, renderRate } from 'utils/format/number';
 
 const { useTranslation } = require('react-i18next');
 
@@ -29,7 +29,8 @@ export const useColumnsTableDriver = () => {
     },
     {
       name: t('driver.rate'),
-      selector: (row) => row.year,
+      selector: (row) =>
+        renderRate(calculateAcceptRate(row.cancel_orders_total, row.accept_orders_total)),
     },
     {
       name: t('driver.trips'),
