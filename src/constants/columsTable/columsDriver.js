@@ -32,7 +32,7 @@ export const useColumnsTableDriver = () => {
     },
     {
       name: t('driver.rate'),
-      selector: (row) => (row?.acceptanceRate ? formatNumber(row?.acceptanceRate) : '---'),
+      selector: (row) => (row?.acceptanceRate ? `${formatNumber(row?.acceptanceRate)} %` : '---'),
       width: '150px',
     },
     {
