@@ -29,8 +29,7 @@ export const useColumnsTableDriver = () => {
     },
     {
       name: t('driver.rate'),
-      selector: (row) =>
-        renderRate(calculateAcceptRate(row.cancel_orders_total, row.accept_orders_total)),
+      selector: (row) => (row?.acceptanceRate ? formatNumber(row?.acceptanceRate) : '---'),
     },
     {
       name: t('driver.trips'),
