@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash';
+import { useRouter } from 'next/router';
 import { formatDate } from 'utils/format/date';
-import { calculateAcceptRate, formatNumber, renderRate } from 'utils/format/number';
+import { formatNumber } from 'utils/format/number';
 
 const { useTranslation } = require('react-i18next');
 
@@ -13,6 +14,7 @@ const renderStatus = (status) => {
 
 export const useColumnsTableDriver = () => {
   const { t } = useTranslation();
+  const { locale } = useRouter();
 
   return [
     {
@@ -32,7 +34,16 @@ export const useColumnsTableDriver = () => {
     },
     {
       name: t('driver.rate'),
-      selector: (row) => (row?.acceptanceRate ? `${formatNumber(row?.acceptanceRate)} %` : '---'),
+      selector: (row) =>
+        row?.acceptanceRate ? (
+          // <div className={`flex ${locale === 'ar' ? 'flex-row-reverse' : 'lex-row-reverse'}`}>
+          <div className="flex flex-row">
+            <div>{formatNumber({ number: row?.acceptanceRate })}</div>
+            <div> %</div>
+          </div>
+        ) : (
+          '---'
+        ),
       width: '150px',
     },
     {
