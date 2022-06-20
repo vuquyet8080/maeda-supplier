@@ -89,7 +89,7 @@ export default function Driver() {
       const response = await getDrivers(filter);
       flagGetDataEarn.current = false;
       setData(response?.data?.data?.results);
-      setTotalRows(response.data.data.total / limit);
+      setTotalRows(Math.ceil(response.data.data.total / limit));
     } catch (error) {
       console.log('error', error);
     } finally {
